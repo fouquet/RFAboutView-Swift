@@ -1,0 +1,14 @@
+PODS:
+  - RFAboutView-Swift (1.0.0)
+
+DEPENDENCIES:
+  - RFAboutView-Swift (from `../`)
+
+EXTERNAL SOURCES:
+  RFAboutView-Swift:
+    :path: ../
+
+SPEC CHECKSUMS:
+  RFAboutView-Swift: ba893a8b9a1ec5315200a7eb5e740deda69a7bee
+
+COCOAPODS: 0.36.3

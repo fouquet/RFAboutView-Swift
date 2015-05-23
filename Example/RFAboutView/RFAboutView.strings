@@ -1,0 +1,38 @@
+/* 
+  RFAboutView.strings
+  RFAboutView
+
+  Created by René Fouquet on 20/05/15.
+  Copyright (c) 2015 René Fouquet. All rights reserved. 
+ 
+  This file contains all strings used by RFAboutView. Copy them to your Localizable.strings file for easy
+  localisation or if you would like to change the text.
+ */
+
+/* Acknowlegdments header title */
+"%@ makes use of the following third party libraries. Many thanks to the developers making them available!" = "%@ makes use of the following third party libraries. Many thanks to the developers making them available!";
+
+/* Prefilled Email message text */
+"<p>[Please insert your message here]</p><p><em>For support inquiries, please include the following information. These make it easier for me to help you. Thank you!</em><p><hr><p><strong>Support Information</strong></p></p>%@ Version %@ (%@)<br>%@ (%@)<br>iOS %@ (%@)</p><hr>" = "<p><< Please insert your message here >></p><p><em>For support inquiries, please include the following information. These make it easier for me to help you. Thank you!</em><p><hr><p><strong>Suport Information</strong></p></p>%1$@ Version %2$@ (%3$@)<br>%4$@ (%5$@)<br>iOS %6$@ (%7$@)</p><hr>";
+
+/* UINavigationBar Title */
+"About" = "About";
+
+/* Cannot send Email */
+"Cannot send Email" = "Cannot send Email";
+
+/* Copy diagnostic info to pasteboard */
+"Copy Info" = "Copy Info";
+
+/* Dismiss error message */
+"Dismiss" = "Dismiss";
+
+/* Sending email message failed */
+"Message Failed!" = "Message Failed!";
+
+/* Error message: no email accounts available */
+"Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!" = "Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %1$@ and include the following information: %2$@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!";
+
+/* Error message: email failed to send */
+"Your email has failed to send." = "Your email has failed to send.";
+

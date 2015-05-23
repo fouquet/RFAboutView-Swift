@@ -1,0 +1,6 @@
+framework module RFAboutView_Swift {
+  umbrella header "Pods-RFAboutView-Swift-umbrella.h"
+
+  export *
+  module * { export * }
+}
