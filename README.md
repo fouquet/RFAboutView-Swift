@@ -1,8 +1,8 @@
 # RFAboutView-Swift
 
-[![Version](https://img.shields.io/cocoapods/v/RFAboutView.svg?style=flat)](http://cocoapods.org/pods/RFAboutView)
-[![License](https://img.shields.io/cocoapods/l/RFAboutView.svg?style=flat)](http://cocoapods.org/pods/RFAboutView)
-[![Platform](https://img.shields.io/cocoapods/p/RFAboutView.svg?style=flat)](http://cocoapods.org/pods/RFAboutView)
+[![Version](https://img.shields.io/cocoapods/v/RFAboutView-Swift.svg?style=flat)](http://cocoapods.org/pods/RFAboutView-Swift)
+[![License](https://img.shields.io/cocoapods/l/RFAboutView-Swift.svg?style=flat)](http://cocoapods.org/pods/RFAboutView-Swift)
+[![Platform](https://img.shields.io/cocoapods/p/RFAboutView-Swift.svg?style=flat)](http://cocoapods.org/pods/RFAboutView-Swift)
 
 **RFAboutView** is an easy, drop-in solution to display copyright, support, privacy and other information while also automatically crediting the developers of third-party Cocoapods. RFAboutView uses AutoLayout and can be used both for iPhone and iPad apps.
 
