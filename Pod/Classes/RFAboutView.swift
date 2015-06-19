@@ -35,6 +35,18 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     /// TableView text color. Defaults to black color.
     public var tableViewTextColor: UIColor = .blackColor()
 
+    /// Background Color of the Navigation Bar.
+    public var navigationViewBackgroundColor: UIColor?
+    
+    /// Bar Tint Color of the Navigation Bar.
+    public var navigationBarBarTintColor: UIColor?
+    
+    /// Tint color of the Navigation Bar. Defaults to the view's default tint color.
+    public var navigationBarTintColor: UIColor?
+    
+    /// Color of the Navigation Bar Title. Defaults to blackColor.
+    public var navigationBarTitleTextColor: UIColor = .blackColor()
+    
     /// The background of the about header. Defaults to nil.
     public var headerBackgroundImage: UIImage?
     
@@ -113,6 +125,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     public init(appName: String?, appVersion: String?, appBuild: String?, copyrightHolderName: String?, contactEmail: String?, contactEmailTitle: String?, websiteURL: NSURL?, websiteURLTitle: String?, pubYear: String?) {
         super.init(nibName: nil, bundle: nil)
         
+        self.navigationViewBackgroundColor = self.navigationController?.view.backgroundColor // Set from system default
+        self.navigationBarBarTintColor = self.navigationController?.navigationBar.barTintColor // Set from system default
+        self.navigationBarTintColor = self.tintColor // Set from system default
+        
         self.appName = appName;
         self.appVersion = appVersion;
         self.appBuild = appBuild;
@@ -156,6 +172,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.view.backgroundColor = self.backgroundColor
         self.view.tintColor = self.tintColor
         self.navigationItem.leftBarButtonItem?.tintColor = self.tintColor
+        self.navigationController?.view.backgroundColor = self.navigationViewBackgroundColor
+        self.navigationController?.navigationBar.barTintColor = self.navigationBarBarTintColor
+        self.navigationController?.navigationBar.tintColor = self.navigationBarTintColor
 
         let ackFile = NSBundle.mainBundle().pathForResource(self.acknowledgementsFilename, ofType: "plist")
         if ackFile != nil {
@@ -365,6 +384,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName : self.navigationBarTitleTextColor
+        ]
         
         let leftItem = UIBarButtonItem(image:self.closeButtonImage, style: .Plain, target: self, action: Selector("close"))
         self.navigationItem.leftBarButtonItem = leftItem
