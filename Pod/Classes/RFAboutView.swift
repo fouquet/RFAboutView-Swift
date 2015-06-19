@@ -537,7 +537,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         var outputArray = NSMutableArray()
   
         for innerDict: AnyObject in theDict {
-            outputArray.addObject(["title":innerDict["Title"] as! String,"content":innerDict["FooterText"] as! String])
+            if let tempTile = innerDict["Title"] as! String?, let tempContent = innerDict["FooterText"] as! String? {
+                outputArray.addObject(["title":tempTile,"content":tempContent])
+            }
         }
         return outputArray;
     }
