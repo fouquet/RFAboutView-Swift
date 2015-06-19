@@ -13,10 +13,10 @@ Its main features are:
 * Displays app name and copyright information.
 * Displays an optional link to a website, opening in Safari.
 * Displays an optional link to an Email address.
-* If the user clicks on the Email link, a `MFMailComposeViewController` opens, (optionally) prefilled with diagnostic information useful for support: App name and version, current device, current iOS version, preferred device language.
+* If the user clicks on the Email link, a `MFMailComposeViewController` opens, (optionally) pre-filled with diagnostic information useful for support: App name and version, current device, current iOS version, preferred device language.
 * Displays additional buttons with further information (for example your TOS or Privacy Policy) that you can specify.
 * Displays acknowledgements for all Cocoapods used in the project. The acknowledgements file automatically created by Cocoapods is used for this, requiring almost no work on your part. See "Automatic acknowledgements" below for more information.
-* Clean and modern design with lots of customization options.
+* Clean and modern design with lots of customisation options.
 
 ## Screenshots
 
@@ -96,7 +96,7 @@ RFAboutView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following lines to your Podfile:
 
 ```ruby
-pod "RFAboutView-Swift", '~> 1.0.0'
+pod "RFAboutView-Swift", '~> 1.0.1'
 use_frameworks!
 ```
 
