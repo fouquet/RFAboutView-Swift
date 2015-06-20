@@ -32,6 +32,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     /// TableView background color. Defaults to white color.
     public var tableViewBackgroundColor: UIColor = .whiteColor()
     
+    /// Background Color of the selected tableview cell.
+    public var tableViewSelectionColor: UIColor?
+    
     /// TableView text color. Defaults to black color.
     public var tableViewTextColor: UIColor = .blackColor()
     
@@ -176,9 +179,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.navigationController?.navigationBar.barTintColor = self.navigationBarBarTintColor
         self.navigationController?.navigationBar.tintColor = self.navigationBarTintColor
         
-        let ackFile = NSBundle.mainBundle().pathForResource(self.acknowledgementsFilename, ofType: "plist")
-        if ackFile != nil {
-            let dict = NSDictionary(contentsOfFile: ackFile!)
+        if let ackFile = NSBundle.mainBundle().pathForResource(self.acknowledgementsFilename, ofType: "plist") {
+            let dict = NSDictionary(contentsOfFile: ackFile)
             self.acknowledgements = self.reformatAcknowledgementsDictionary(dict)
         }
         
@@ -415,6 +417,12 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
             cell?.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.688))
             cell?.selectionStyle = .Default
+            
+            if let cellBGColor = self.tableViewSelectionColor {
+                var bgColorView = UIView()
+                bgColorView.backgroundColor = cellBGColor
+                cell?.selectedBackgroundView = bgColorView
+            }
             
             var title = ""
             if tableView.tag == 0 {
