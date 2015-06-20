@@ -438,9 +438,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         var theDict: NSDictionary? = nil
         
         if tableView.tag == 0 {
-            theDict = self.additionalButtons[indexPath.row] as? NSDictionary
+            title = self.additionalButtons[indexPath.row].valueForKey("title") as? String
         } else {
-            theDict = self.acknowledgements[indexPath.row] as? NSDictionary
+            title = self.acknowledgements[indexPath.row].valueForKey("title") as? String
         }
         let viewController = RFAboutViewDetailViewController(infoDictionary: theDict)
         viewController.showsScrollIndicator = self.showsScrollIndicator
@@ -560,7 +560,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         var outputArray = NSMutableArray()
   
         for innerDict: AnyObject in theDict {
-            if let tempTile = innerDict["Title"] as! String?, let tempContent = innerDict["FooterText"] as! String? {
+            if let tempTile = innerDict.objectForKey("title") as! String?, let tempContent = innerDict.objectForKey("FooterText") as! String? {
                 outputArray.addObject(["title":tempTile,"content":tempContent])
             }
         }
