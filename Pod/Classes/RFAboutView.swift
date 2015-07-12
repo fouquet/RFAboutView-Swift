@@ -550,7 +550,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     private func sizeForPercent(percent: CGFloat) -> CGFloat {
-        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             return ceil(((self.view.frame.size.width * 0.7) * (percent / 100)))
         } else {
             return ceil(self.view.frame.size.width * (percent / 100))
@@ -634,7 +634,7 @@ public class RFAboutViewDetailViewController: UIViewController {
     }
     
     private func sizeForPercent(percent: CGFloat) -> CGFloat {
-        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             return ceil(((self.view.frame.size.width * 0.7) * (percent / 100)))
         } else {
             return ceil(self.view.frame.size.width * (percent / 100))
