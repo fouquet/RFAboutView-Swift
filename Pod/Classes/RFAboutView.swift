@@ -164,7 +164,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         }
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -601,7 +601,7 @@ public class RFAboutViewDetailViewController: UIViewController {
         self.infoDict = infoDictionary!
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
