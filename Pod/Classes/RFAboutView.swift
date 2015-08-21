@@ -54,7 +54,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     public var headerBackgroundImage: UIImage?
     
     /// The image for the button to dismiss the RFAboutViewController. Defaults to image of "X".
-    public var closeButtonImage: UIImage? = UIImage(named: "RFAboutView_Swift.bundle/RFAboutViewCloseX")
+    public var closeButtonImage: UIImage? = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
     
     /// Determines if the header background image should be blurred. Defaults to true.
     public var blurHeaderBackground: Bool = true
