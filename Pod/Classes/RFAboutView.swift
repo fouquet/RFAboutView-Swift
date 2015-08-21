@@ -101,6 +101,27 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     /// The year the app's version was published. Used in the copyright text. Leave nil to use the current year.
     public var pubYear: String?
     
+    /// Font used for the app name
+    public var fontAppName: UIFont?
+    
+    /// Font used for the copyright information text
+    public var fontCopyrightInfo: UIFont?
+    
+    /// Font used for the website button label
+    public var fontWebsiteButton: UIFont?
+    
+    /// Font used for the email button label
+    public var fontEmailButton: UIFont?
+    
+    /// Font used for the label on top of the "pods used" table
+    public var fontHeaderLabel: UIFont?
+    
+    /// Font used for the "pods used" table cell label
+    public var fontTableCellText: UIFont?
+    
+    /// Font used for the license text in the pod detail view
+    public var fontLicenseText: UIFont?
+
     private var acknowledgements: NSArray = NSArray()
     private var metrics: Dictionary <String,NSObject> = Dictionary()
     private var scrollViewContainerWidth: NSLayoutConstraint?
@@ -223,6 +244,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let appName = UILabel()
         appName.setTranslatesAutoresizingMaskIntoConstraints(false)
         appName.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(5.625))
+        if let theFont = self.fontAppName {
+            appName.font = theFont
+        }
         appName.numberOfLines = 0
         appName.backgroundColor = .clearColor()
         appName.textAlignment = .Center
@@ -235,6 +259,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let copyrightInfo = UILabel()
         copyrightInfo.setTranslatesAutoresizingMaskIntoConstraints(false)
         copyrightInfo.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
+        if let theFont = self.fontCopyrightInfo {
+            copyrightInfo.font = theFont
+        }
         copyrightInfo.numberOfLines = 0
         copyrightInfo.backgroundColor = .clearColor()
         copyrightInfo.textAlignment = .Center
@@ -251,6 +278,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             websiteButton.setTitle(self.websiteURLTitle, forState: .Normal)
             websiteButton.setTitleColor(self.headerTextColor, forState: .Normal)
             websiteButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
+            if let theFont = self.fontWebsiteButton {
+                websiteButton.titleLabel?.font = theFont
+            }
             websiteButton.addTarget(self, action: "goToWebsite", forControlEvents: .TouchUpInside)
             headerView.addSubview(websiteButton)
         }
@@ -262,6 +292,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             eMailButton.setTitle(self.contactEmailTitle, forState: .Normal)
             eMailButton.setTitleColor(self.headerTextColor, forState: .Normal)
             eMailButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
+            if let theFont = self.fontEmailButton {
+                eMailButton.titleLabel?.font = theFont
+            }
             eMailButton.addTarget(self, action: "email", forControlEvents: .TouchUpInside)
             headerView.addSubview(eMailButton)
         }
@@ -284,6 +317,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let tableHeaderLabel = UILabel()
         tableHeaderLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         tableHeaderLabel.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
+        if let theFont = self.fontHeaderLabel {
+            tableHeaderLabel.font = theFont
+        }
         tableHeaderLabel.numberOfLines = 0
         tableHeaderLabel.textColor = self.acknowledgementsHeaderColor
         tableHeaderLabel.backgroundColor = .clearColor()
@@ -416,6 +452,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         if cell==nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
             cell?.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.688))
+            if let theFont = self.fontTableCellText {
+                cell?.textLabel?.font = theFont
+            }
             cell?.selectionStyle = .Default
             
             if let cellBGColor = self.tableViewSelectionColor {
@@ -454,6 +493,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         viewController.showsScrollIndicator = self.showsScrollIndicator
         viewController.backgroundColor = self.backgroundColor
         viewController.tintColor = self.tintColor
+        viewController.fontLicenseText = self.fontLicenseText
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -589,6 +629,7 @@ public class RFAboutViewDetailViewController: UIViewController {
     public var tintColor: UIColor = .blackColor()
     public var backgroundColor: UIColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
     public var showsScrollIndicator: Bool = true
+    public var fontLicenseText: UIFont?
     private var infoDict: NSDictionary = NSDictionary()
     
     convenience public init() {
@@ -627,7 +668,9 @@ public class RFAboutViewDetailViewController: UIViewController {
         contentTextView.backgroundColor = .clearColor()
         contentTextView.spellCheckingType = .No
         contentTextView.font = UIFont(name: "HelveticaNeue-Light", size:self.sizeForPercent(4.063))
-        
+        if let theFont = self.fontLicenseText {
+            contentTextView.font = theFont
+        }
         contentTextView.text = self.infoDict["content"] as! String!
         
         self.view.addSubview(contentTextView)
