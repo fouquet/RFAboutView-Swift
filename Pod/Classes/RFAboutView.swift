@@ -470,8 +470,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     public func email() {
         
-        var iOSVersion = "" // UIDevice.currentDevice().model as String
-        let device = "" // UIDevice.currentDevice().model as String
+        var iOSVersion = UIDevice.currentDevice().model as String
+        let device = UIDevice.currentDevice().model as String
         let deviceString = self.platformModelString()
         let lang = NSLocale.preferredLanguages().first as! String
         var messageString = ""
