@@ -16,7 +16,7 @@
 		11C699FA1B10ECB500A3D2E0 /* RFAboutView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 11C699F91B10ECB500A3D2E0 /* RFAboutView.strings */; };
 		11C699FD1B10ECC000A3D2E0 /* about_header_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 11C699FB1B10ECC000A3D2E0 /* about_header_bg.jpg */; };
 		11C699FE1B10ECC000A3D2E0 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C699FC1B10ECC000A3D2E0 /* Acknowledgements.plist */; };
-		76ED8BCCD7594E334846CFC9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFE1B54AF2C3911772E8988 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		76ED8BCCD7594E334846CFC9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFE1B54AF2C3911772E8988 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
