@@ -88,7 +88,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-RFAboutView requires iOS 8.0.
+RFAboutView requires iOS 8.0 and Xcode 7 (for Swift 2.0).
 
 ## Installation
 
@@ -96,7 +96,7 @@ RFAboutView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following lines to your Podfile:
 
 ```ruby
-pod "RFAboutView-Swift", '~> 1.0.7'
+pod "RFAboutView-Swift", '~> 1.0.8'
 use_frameworks!
 ```
 
