@@ -36,5 +36,5 @@
 "Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!" = "Leider sind keine Email-Konten konfiguriert.\n\nFür Supportfragen schicken Sie bitte eine Email an %1$@ und geben die folgenden Informationen an: %2$@.\n\nTippen Sie 'Informationen kopieren' an, um diese in die Zwischenablage zu kopieren. Vielen Dank!";
 
 /* Error message: email failed to send */
-"Your email has failed to send." = "Ihre Email konnte nicht abgeschickt werden."";
+"Your email has failed to send." = "Ihre Email konnte nicht abgeschickt werden.";
 
