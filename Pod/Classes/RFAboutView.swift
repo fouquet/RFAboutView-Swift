@@ -8,8 +8,9 @@
 
 import UIKit
 import MessageUI
+import SafariServices
 
-public class RFAboutViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate {
+public class RFAboutViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,SFSafariViewControllerDelegate {
     
     /// Tint color of the RFAboutViewController. Defaults to black color.
     public var tintColor: UIColor = .blackColor()
@@ -505,7 +506,18 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     public func goToWebsite() {
-        UIApplication.sharedApplication().openURL(self.websiteURL!)
+        if #available(iOS 9.0, *) {
+            let webVC = SFSafariViewController(URL: self.websiteURL!)
+            webVC.delegate = self
+            self.presentViewController(webVC, animated: true, completion: nil)
+        } else {
+            UIApplication.sharedApplication().openURL(self.websiteURL!)
+        }
+    }
+    
+    @available(iOS 9.0, *)
+    public func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     public func email() {
