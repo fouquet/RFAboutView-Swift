@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11A138DC1BCEE89700707879 /* RFAboutView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 11A138DE1BCEE89700707879 /* RFAboutView.strings */; };
 		11C699DA1B10EC1E00A3D2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C699D91B10EC1E00A3D2E0 /* AppDelegate.swift */; };
 		11C699DC1B10EC1E00A3D2E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C699DB1B10EC1E00A3D2E0 /* ViewController.swift */; };
 		11C699DF1B10EC1E00A3D2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11C699DD1B10EC1E00A3D2E0 /* Main.storyboard */; };
 		11C699E11B10EC1E00A3D2E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11C699E01B10EC1E00A3D2E0 /* Images.xcassets */; };
 		11C699E41B10EC1E00A3D2E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11C699E21B10EC1E00A3D2E0 /* LaunchScreen.xib */; };
 		11C699F01B10EC1E00A3D2E0 /* RFAboutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C699EF1B10EC1E00A3D2E0 /* RFAboutViewTests.swift */; };
-		11C699FA1B10ECB500A3D2E0 /* RFAboutView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 11C699F91B10ECB500A3D2E0 /* RFAboutView.strings */; };
 		11C699FD1B10ECC000A3D2E0 /* about_header_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 11C699FB1B10ECC000A3D2E0 /* about_header_bg.jpg */; };
 		11C699FE1B10ECC000A3D2E0 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11C699FC1B10ECC000A3D2E0 /* Acknowledgements.plist */; };
 		76ED8BCCD7594E334846CFC9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFE1B54AF2C3911772E8988 /* Pods.framework */; };
@@ -30,6 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11A138DD1BCEE89700707879 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/RFAboutView.strings; sourceTree = "<group>"; };
+		11A138E01BCEE8A500707879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/RFAboutView.strings; sourceTree = "<group>"; };
+		11A138E11BCEE8B600707879 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/RFAboutView.strings; sourceTree = "<group>"; };
 		11C699D41B10EC1E00A3D2E0 /* RFAboutView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RFAboutView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C699D81B10EC1E00A3D2E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C699D91B10EC1E00A3D2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,7 +43,6 @@
 		11C699E91B10EC1E00A3D2E0 /* RFAboutViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RFAboutViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C699EE1B10EC1E00A3D2E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C699EF1B10EC1E00A3D2E0 /* RFAboutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAboutViewTests.swift; sourceTree = "<group>"; };
-		11C699F91B10ECB500A3D2E0 /* RFAboutView.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = RFAboutView.strings; sourceTree = "<group>"; };
 		11C699FB1B10ECC000A3D2E0 /* about_header_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = about_header_bg.jpg; sourceTree = "<group>"; };
 		11C699FC1B10ECC000A3D2E0 /* Acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Acknowledgements.plist; sourceTree = "<group>"; };
 		1BFE1B54AF2C3911772E8988 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,7 +94,7 @@
 			children = (
 				11C699FB1B10ECC000A3D2E0 /* about_header_bg.jpg */,
 				11C699FC1B10ECC000A3D2E0 /* Acknowledgements.plist */,
-				11C699F91B10ECB500A3D2E0 /* RFAboutView.strings */,
+				11A138DE1BCEE89700707879 /* RFAboutView.strings */,
 				11C699D91B10EC1E00A3D2E0 /* AppDelegate.swift */,
 				11C699DB1B10EC1E00A3D2E0 /* ViewController.swift */,
 				11C699DD1B10EC1E00A3D2E0 /* Main.storyboard */,
@@ -212,6 +214,7 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
 			);
 			mainGroup = 11C699CB1B10EC1E00A3D2E0;
 			productRefGroup = 11C699D51B10EC1E00A3D2E0 /* Products */;
@@ -230,7 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11C699DF1B10EC1E00A3D2E0 /* Main.storyboard in Resources */,
-				11C699FA1B10ECB500A3D2E0 /* RFAboutView.strings in Resources */,
+				11A138DC1BCEE89700707879 /* RFAboutView.strings in Resources */,
 				11C699FD1B10ECC000A3D2E0 /* about_header_bg.jpg in Resources */,
 				11C699FE1B10ECC000A3D2E0 /* Acknowledgements.plist in Resources */,
 				11C699E41B10EC1E00A3D2E0 /* LaunchScreen.xib in Resources */,
@@ -324,6 +327,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		11A138DE1BCEE89700707879 /* RFAboutView.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				11A138DD1BCEE89700707879 /* de */,
+				11A138E01BCEE8A500707879 /* Base */,
+				11A138E11BCEE8B600707879 /* it */,
+			);
+			name = RFAboutView.strings;
+			sourceTree = "<group>";
+		};
 		11C699DD1B10EC1E00A3D2E0 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

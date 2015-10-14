@@ -1,0 +1,39 @@
+/*
+ RFAboutView.strings
+ RFAboutView
+ 
+ Created by René Fouquet on 20/05/15.
+ Copyright (c) 2015 René Fouquet. All rights reserved.
+ 
+ This file contains all strings used by RFAboutView. Copy them to your Localizable.strings file for easy
+ localisation or if you would like to change the text.
+ 
+ Italian translation by Fabio Nisci (https://github.com/fabiosoft)
+ */
+
+/* Acknowlegdments header title */
+"%@ makes use of the following third party libraries. Many thanks to the developers making them available!" = "%@ fa uso delle seguanti librerie di terze parti. Molte grazie agli sviluppatori che le hanno rese disponibili.";
+
+/* Prefilled Email message text */
+"<p>[Please insert your message here]</p><p><em>For support inquiries, please include the following information. These make it easier for me to help you. Thank you!</em><p><hr><p><strong>Support Information</strong></p></p>%@ Version %@ (%@)<br>%@ (%@)<br>iOS %@ (%@)</p><hr>" = "<p>[Inserisci qui il tuo messaggio]</p><p><em>Per richieste di supporto, si prega di includere le seguenti informazioni. Queste renderanno più facile il supporto. Grazie!</em><p><hr><p><strong>Informazioni</strong></p></p>%@ Versione %@ (%@)<br>%@ (%@)<br>iOS %@ (%@)</p><hr>";
+
+/* UINavigationBar Title */
+"About" = "Info";
+
+/* Cannot send Email */
+"Cannot send Email" = "Impossibile inviare Email";
+
+/* Copy diagnostic info to pasteboard */
+"Copy Info" = "Copia Info";
+
+/* Dismiss error message */
+"Dismiss" = "Chiudi";
+
+/* Sending email message failed */
+"Message Failed!" = "Fallito!";
+
+/* Error message: no email accounts available */
+"Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!" = "Purtroppo non ci sono i account di posta elettronica disponibili sul dispositivo.\n\nPer le domande di supporto, si prega di inviare una e-mail a %1$@ che includa le seguenti informazioni: %2$@.\n\nPremi il pulsante 'Copia Info' per copiare. queste informazioni negli appunti. Grazie!";
+
+/* Error message: email failed to send */
+"Your email has failed to send." = "L'invio dell'email è fallito";
