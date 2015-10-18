@@ -427,9 +427,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName : self.navigationBarTitleTextColor
         ]
-        
-        let leftItem = UIBarButtonItem(image:self.closeButtonImage, style: .Plain, target: self, action: Selector("close"))
-        self.navigationItem.leftBarButtonItem = leftItem
+        if self.navigationController?.viewControllers.first == self {
+            let leftItem = UIBarButtonItem(image:self.closeButtonImage, style: .Plain, target: self, action: Selector("close"))
+            self.navigationItem.leftBarButtonItem = leftItem
+        }
         self.navigationItem.title = NSLocalizedString("About", comment:"UINavigationBar Title")
     }
     
