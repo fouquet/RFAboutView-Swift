@@ -122,7 +122,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     /// Font used for the license text in the pod detail view
     public var fontLicenseText: UIFont?
-
+    
     private var acknowledgements: NSArray = NSArray()
     private var metrics: Dictionary <String,NSObject> = Dictionary()
     private var scrollViewContainerWidth: NSLayoutConstraint?
@@ -144,7 +144,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     - parameter websiteURL:          The URL for the website link. Leave nil to skip.
     - parameter websiteURLTitle:     The title for the website link. Leave nil to use the website URL.
     - parameter pubYear:             The year the app's version was published. Used in the copyright text. Leave nil to use the current year.
-
+    
     - returns:  RFAboutViewController instance
     */
     public init(appName: String?, appVersion: String?, appBuild: String?, copyrightHolderName: String?, contactEmail: String?, contactEmailTitle: String?, websiteURL: NSURL?, websiteURLTitle: String?, pubYear: String?) {
@@ -495,6 +495,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         viewController.backgroundColor = self.backgroundColor
         viewController.tintColor = self.tintColor
         viewController.fontLicenseText = self.fontLicenseText
+        viewController.textColor = self.acknowledgementsHeaderColor
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -642,6 +643,7 @@ public class RFAboutViewDetailViewController: UIViewController {
     public var backgroundColor: UIColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
     public var showsScrollIndicator: Bool = true
     public var fontLicenseText: UIFont?
+    public var textColor: UIColor = .blackColor()
     private var infoDict: NSDictionary = NSDictionary()
     
     convenience public init() {
@@ -679,6 +681,7 @@ public class RFAboutViewDetailViewController: UIViewController {
         contentTextView.showsVerticalScrollIndicator = self.showsScrollIndicator
         contentTextView.backgroundColor = .clearColor()
         contentTextView.spellCheckingType = .No
+        contentTextView.textColor = self.textColor
         contentTextView.font = UIFont(name: "HelveticaNeue-Light", size:self.sizeForPercent(4.063))
         if let theFont = self.fontLicenseText {
             contentTextView.font = theFont
