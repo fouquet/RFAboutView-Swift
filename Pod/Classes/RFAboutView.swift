@@ -162,6 +162,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.websiteURLTitle = websiteURLTitle;
         self.copyrightHolderName = copyrightHolderName;
         self.websiteURL = websiteURL;
+        self.pubYear = pubYear
         
         if appName == nil {
             self.appName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as! String!
