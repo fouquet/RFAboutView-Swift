@@ -154,14 +154,14 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.navigationBarBarTintColor = self.navigationController?.navigationBar.barTintColor // Set from system default
         self.navigationBarTintColor = self.tintColor // Set from system default
         
-        self.appName = appName;
-        self.appVersion = appVersion;
-        self.appBuild = appBuild;
-        self.contactEmail = contactEmail;
-        self.contactEmailTitle = contactEmailTitle;
-        self.websiteURLTitle = websiteURLTitle;
-        self.copyrightHolderName = copyrightHolderName;
-        self.websiteURL = websiteURL;
+        self.appName = appName
+        self.appVersion = appVersion
+        self.appBuild = appBuild
+        self.contactEmail = contactEmail
+        self.contactEmailTitle = contactEmailTitle
+        self.websiteURLTitle = websiteURLTitle
+        self.copyrightHolderName = copyrightHolderName
+        self.websiteURL = websiteURL
         self.pubYear = pubYear
         
         if appName == nil {
@@ -652,7 +652,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
                 outputArray.addObject(["title":tempTile,"content":tempContent])
             }
         }
-        return outputArray;
+        return outputArray
     }
     
     //MARK:- Autorotation
