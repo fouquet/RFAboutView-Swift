@@ -127,6 +127,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     private var metrics: Dictionary <String,NSObject> = Dictionary()
     private var scrollViewContainerWidth: NSLayoutConstraint?
     private var additionalButtons: NSMutableArray = NSMutableArray()
+
+    private let additionalButtonsTable = UITableView(frame: .zero, style: .Grouped)
+    private let acknowledgementsTableView = UITableView(frame: .zero, style: .Grouped)
     
     convenience public init() {
         self.init(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: nil, contactEmail: nil, contactEmailTitle: nil, websiteURL: nil, websiteURLTitle: nil, pubYear: nil)
@@ -295,9 +298,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             eMailButton.addTarget(self, action: "email", forControlEvents: .TouchUpInside)
             headerView.addSubview(eMailButton)
         }
-        
-        let additionalButtonsTable = UITableView(frame: CGRectZero, style: .Grouped)
-        additionalButtonsTable.tag = 0
+
         additionalButtonsTable.translatesAutoresizingMaskIntoConstraints = false
         additionalButtonsTable.clipsToBounds = false
         additionalButtonsTable.delegate = self
@@ -333,9 +334,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         if self.showAcknowledgements {
             scrollViewContainer.addSubview(tableHeaderLabel)
         }
-        
-        let acknowledgementsTableView = UITableView(frame: CGRectZero, style: .Grouped)
-        acknowledgementsTableView.tag = 1
+
         acknowledgementsTableView.translatesAutoresizingMaskIntoConstraints = false
         acknowledgementsTableView.clipsToBounds = false
         acknowledgementsTableView.delegate = self
@@ -437,10 +436,13 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     //MARK:- UITableView Delegate & Data Source
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView.tag == 0 {
-            return self.additionalButtons.count
-        } else {
-            return self.acknowledgements.count
+        switch tableView {
+        case additionalButtonsTable:
+            return additionalButtons.count
+        case acknowledgementsTableView:
+            return acknowledgements.count
+        default:
+            return 0
         }
     }
     
@@ -470,7 +472,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             }
             
             var title = ""
-            if tableView.tag == 0 {
+            if tableView == additionalButtonsTable {
                 title = (self.additionalButtons[indexPath.row].valueForKey("title") as? String)!
             } else {
                 title = (self.acknowledgements[indexPath.row].valueForKey("title") as? String)!
@@ -490,7 +492,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         var theDict: NSDictionary? = nil
         
-        if tableView.tag == 0 {
+        if tableView == additionalButtonsTable {
             theDict = self.additionalButtons[indexPath.row] as? NSDictionary
         } else {
             theDict = self.acknowledgements[indexPath.row] as? NSDictionary
