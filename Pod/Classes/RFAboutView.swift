@@ -153,38 +153,16 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.navigationViewBackgroundColor = self.navigationController?.view.backgroundColor // Set from system default
         self.navigationBarBarTintColor = self.navigationController?.navigationBar.barTintColor // Set from system default
         self.navigationBarTintColor = self.tintColor // Set from system default
-        
-        self.appName = appName
-        self.appVersion = appVersion
-        self.appBuild = appBuild
+
+        self.appName = appName ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String
+        self.appVersion = appVersion ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String
+        self.appBuild = appBuild ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? String
         self.contactEmail = contactEmail
-        self.contactEmailTitle = contactEmailTitle
-        self.websiteURLTitle = websiteURLTitle
-        self.copyrightHolderName = copyrightHolderName
+        self.contactEmailTitle = contactEmailTitle ?? self.contactEmail
+        self.copyrightHolderName = copyrightHolderName ?? "Some Developer"
         self.websiteURL = websiteURL
-        self.pubYear = pubYear
-        
-        if appName == nil {
-            self.appName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as! String!
-        }
-        if appVersion == nil {
-            self.appVersion = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String!
-        }
-        if appBuild == nil {
-            self.appBuild = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as! String!
-        }
-        if contactEmailTitle == nil {
-            self.contactEmailTitle = self.contactEmail
-        }
-        if copyrightHolderName == nil {
-            self.copyrightHolderName = "Some Developer"
-        }
-        if websiteURLTitle == nil {
-            self.websiteURLTitle = self.websiteURL?.absoluteString
-        }
-        if pubYear == nil {
-            self.pubYear = String(NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: NSDate()).year)
-        }
+        self.websiteURLTitle = websiteURLTitle ?? self.websiteURL?.absoluteString
+        self.pubYear = pubYear ?? String(NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: NSDate()).year)
     }
     
     required public init?(coder aDecoder: NSCoder) {
