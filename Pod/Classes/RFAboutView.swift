@@ -326,7 +326,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         tableHeaderLabel.textColor = self.acknowledgementsHeaderColor
         tableHeaderLabel.backgroundColor = .clearColor()
         tableHeaderLabel.textAlignment = .Left
-        tableHeaderLabel.text = NSLocalizedString(String(format: "%@ makes use of the following third party libraries. Many thanks to the developers making them available!",self.appName!) as String, comment: "Acknowlegdments header title")
+        tableHeaderLabel.text = NSLocalizedString(String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), self.appName!) as String, comment: "Acknowlegdments header title")
         headerView.addSubview(tableHeaderLabel)
         tableHeaderLabel.sizeToFit()
         tableHeaderLabel.layoutIfNeeded()
