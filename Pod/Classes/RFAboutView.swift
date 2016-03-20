@@ -473,7 +473,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell!.selected = false
         
-        var theDict: [String: String]?
+        var theDict = [String: String]()
         
         if tableView == additionalButtonsTable {
             theDict = self.additionalButtons[indexPath.row]
@@ -615,60 +615,5 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
-    }
-}
-
-public class RFAboutViewDetailViewController: UIViewController {
-    public var tintColor: UIColor = .blackColor()
-    public var backgroundColor: UIColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
-    public var showsScrollIndicator: Bool = true
-    public var fontLicenseText: UIFont?
-    public var textColor: UIColor = .blackColor()
-    private var infoDict: NSDictionary = NSDictionary()
-    
-    convenience public init() {
-        self.init(infoDictionary: nil)
-    }
-    
-    public init(infoDictionary: NSDictionary?) {
-        super.init(nibName: nil, bundle: nil)
-        
-        self.infoDict = infoDictionary!
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    public override func loadView() {
-        super.loadView()
-        
-        self.view.backgroundColor = self.backgroundColor
-        self.view.tintColor = self.tintColor
-        
-        self.navigationItem.title = self.infoDict["title"] as! String!
-        self.navigationController?.toolbarHidden = true
-        
-        let contentTextView = UITextView()
-        contentTextView.frame = self.view.bounds
-        contentTextView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
-        contentTextView.textContainerInset = UIEdgeInsetsMake(self.sizeForPercent(3.125), self.sizeForPercent(3.125), self.sizeForPercent(3.125), self.sizeForPercent(3.125))
-        contentTextView.userInteractionEnabled = true
-        contentTextView.selectable = true
-        contentTextView.editable = false
-        contentTextView.scrollEnabled = true
-        contentTextView.showsHorizontalScrollIndicator = false
-        contentTextView.showsVerticalScrollIndicator = self.showsScrollIndicator
-        contentTextView.backgroundColor = .clearColor()
-        contentTextView.spellCheckingType = .No
-        contentTextView.textColor = self.textColor
-        contentTextView.font = UIFont.systemFontOfSize(self.sizeForPercent(4.063), weight: -1)
-
-        if let theFont = self.fontLicenseText {
-            contentTextView.font = theFont
-        }
-        contentTextView.text = self.infoDict["content"] as! String!
-        
-        self.view.addSubview(contentTextView)
     }
 }
