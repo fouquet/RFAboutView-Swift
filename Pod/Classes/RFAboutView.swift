@@ -150,7 +150,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     - returns:  RFAboutViewController instance
     */
-    public init(appName: String?, appVersion: String?, appBuild: String?, copyrightHolderName: String?, contactEmail: String?, contactEmailTitle: String?, websiteURL: NSURL?, websiteURLTitle: String?, pubYear: String?) {
+    public init(appName: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String, appVersion: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String, appBuild: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? String, copyrightHolderName: String? = "Developer", contactEmail: String? = nil, contactEmailTitle: String? = nil, websiteURL: NSURL? = nil, websiteURLTitle: String? = nil, pubYear: String? = String(NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: NSDate()).year)) {
         super.init(nibName: nil, bundle: nil)
         
         self.navigationViewBackgroundColor = self.navigationController?.view.backgroundColor // Set from system default
@@ -162,7 +162,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.appBuild = appBuild ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? String
         self.contactEmail = contactEmail
         self.contactEmailTitle = contactEmailTitle ?? self.contactEmail
-        self.copyrightHolderName = copyrightHolderName ?? "Some Developer"
+        self.copyrightHolderName = copyrightHolderName ?? "Developer"
         self.websiteURL = websiteURL
         self.websiteURLTitle = websiteURLTitle ?? self.websiteURL?.absoluteString
         self.pubYear = pubYear ?? String(NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: NSDate()).year)
