@@ -189,32 +189,16 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             }
         }
         
-        let mainScrollView = UIScrollView()
-        mainScrollView.translatesAutoresizingMaskIntoConstraints = false
-        mainScrollView.backgroundColor = .clearColor()
-        mainScrollView.showsHorizontalScrollIndicator = false
-        mainScrollView.showsVerticalScrollIndicator = showsScrollIndicator
+        let mainScrollView = createMainScrollView()
         view.addSubview(mainScrollView)
         
-        let scrollViewContainer = UIView()
-        scrollViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        scrollViewContainer.backgroundColor = .clearColor()
+        let scrollViewContainer = createScrollViewContainer()
         mainScrollView.addSubview(scrollViewContainer)
         
-        let headerView = UIView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.backgroundColor = headerBackgroundColor
-        headerView.layer.borderColor = headerBorderColor.CGColor
-        headerView.layer.borderWidth = 0.5
-        headerView.clipsToBounds = true
+        let headerView = createHeaderView()
         scrollViewContainer.addSubview(headerView)
         
-        let headerBackground = UIImageView()
-        headerBackground.translatesAutoresizingMaskIntoConstraints = true
-        headerBackground.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        headerBackground.image = headerBackgroundImage
-        headerBackground.contentMode = .ScaleAspectFill
-        headerBackground.frame = headerView.bounds
+        let headerBackground = createHeaderBackground(headerView: headerView)
         headerView.addSubview(headerBackground)
         
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
@@ -225,193 +209,42 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             headerBackground.addSubview(visualEffectView)
         }
         
-        let appNameLabel = UILabel()
-        appNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        appNameLabel.font = UIFont.systemFontOfSize(sizeForPercent(5.625), weight: -0.5)
-
-        if let theFont = fontAppName {
-            appNameLabel.font = theFont
-        }
-        
-        appNameLabel.numberOfLines = 0
-        appNameLabel.backgroundColor = .clearColor()
-        appNameLabel.textAlignment = .Center
-        appNameLabel.text = appName
-        appNameLabel.textColor = headerTextColor
-        headerView.addSubview(appNameLabel)
-        appNameLabel.sizeToFit()
-        appNameLabel.layoutIfNeeded()
-        
-        let copyrightInfo = UILabel()
-        copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
-        copyrightInfo.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
-
-        if let theFont = fontCopyrightInfo {
-            copyrightInfo.font = theFont
-        }
-        copyrightInfo.numberOfLines = 0
-        copyrightInfo.backgroundColor = .clearColor()
-        copyrightInfo.textAlignment = .Center
-        copyrightInfo.text = "Version \(appVersion!) (\(appBuild!))\n © \(pubYear!) \(copyrightHolderName!)"
-        copyrightInfo.textColor = headerTextColor
-        headerView.addSubview(copyrightInfo)
-        copyrightInfo.sizeToFit()
-        copyrightInfo.layoutIfNeeded()
+        let appNameLabel = createAndAddNameLabel(headerView: headerView)
+        let copyrightInfo = createAndAddCopyrightLabel(headerView: headerView)
         
         let websiteButton = UIButton(type: .Custom)
         
-        if websiteURL != nil {
-            websiteButton.translatesAutoresizingMaskIntoConstraints = false
-            websiteButton.setTitle(websiteURLTitle, forState: .Normal)
-            websiteButton.setTitleColor(headerTextColor, forState: .Normal)
-            websiteButton.titleLabel?.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
-
+        if let _ = websiteURL {
+            var buttonFont = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
             if let theFont = fontWebsiteButton {
-                websiteButton.titleLabel?.font = theFont
+                buttonFont = theFont
             }
-            websiteButton.addTarget(self, action: "goToWebsite", forControlEvents: .TouchUpInside)
-            headerView.addSubview(websiteButton)
+            setupAndAddHeaderButton(websiteButton, title: websiteURLTitle, font: buttonFont, target: "goToWebsite", headerView: headerView)
         }
         
         let eMailButton = UIButton(type: .Custom)
         
-        if contactEmail != nil {
-            eMailButton.translatesAutoresizingMaskIntoConstraints = false
-            eMailButton.setTitle(contactEmailTitle, forState: .Normal)
-            eMailButton.setTitleColor(headerTextColor, forState: .Normal)
-            eMailButton.titleLabel?.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
-
+        if let _ = contactEmail {
+            var buttonFont = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
             if let theFont = fontEmailButton {
-                eMailButton.titleLabel?.font = theFont
+                buttonFont = theFont
             }
-            eMailButton.addTarget(self, action: "email", forControlEvents: .TouchUpInside)
-            headerView.addSubview(eMailButton)
+            setupAndAddHeaderButton(eMailButton, title: contactEmailTitle, font: buttonFont, target: "email", headerView: headerView)
         }
 
-        additionalButtonsTable.translatesAutoresizingMaskIntoConstraints = false
-        additionalButtonsTable.clipsToBounds = false
-        additionalButtonsTable.delegate = self
-        additionalButtonsTable.dataSource = self
-        additionalButtonsTable.scrollEnabled = false
-        additionalButtonsTable.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
-        additionalButtonsTable.backgroundColor = .clearColor()
-        additionalButtonsTable.rowHeight = UITableViewAutomaticDimension
-        additionalButtonsTable.estimatedRowHeight = sizeForPercent(12.5)
-        if additionalButtons.count > 0 {
-            scrollViewContainer.addSubview(additionalButtonsTable)
-        }
+        createAndAddAdditionalButtonsTable(scrollViewContainer: scrollViewContainer)
         
-        let tableHeaderLabel = UILabel()
-        tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        tableHeaderLabel.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
-
-        if let theFont = fontHeaderLabel {
-            tableHeaderLabel.font = theFont
-        }
-        tableHeaderLabel.numberOfLines = 0
-        tableHeaderLabel.textColor = acknowledgementsHeaderColor
-        tableHeaderLabel.backgroundColor = .clearColor()
-        tableHeaderLabel.textAlignment = .Left
-        tableHeaderLabel.text = String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), appName!)
-        headerView.addSubview(tableHeaderLabel)
-        tableHeaderLabel.sizeToFit()
-        tableHeaderLabel.layoutIfNeeded()
+        let tableHeaderLabel = createAndAddTableHeaderLabel(scrollViewContainer: scrollViewContainer)
         
-        if showAcknowledgements {
-            scrollViewContainer.addSubview(tableHeaderLabel)
-        }
-
-        acknowledgementsTableView.translatesAutoresizingMaskIntoConstraints = false
-        acknowledgementsTableView.clipsToBounds = false
-        acknowledgementsTableView.delegate = self
-        acknowledgementsTableView.dataSource = self
-        acknowledgementsTableView.scrollEnabled = false
-        acknowledgementsTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
-        acknowledgementsTableView.backgroundColor = .clearColor()
-        acknowledgementsTableView.rowHeight = UITableViewAutomaticDimension
-        acknowledgementsTableView.estimatedRowHeight = sizeForPercent(12.5)
-        if showAcknowledgements {
-            scrollViewContainer.addSubview(acknowledgementsTableView)
-        }
+        createAndAddAcknowledgementsTableView(scrollViewContainer: scrollViewContainer)
         
-        /*
-        A word of warning!
-        Here comes all the Autolayout mess. Seriously, it's horrible. It's ugly, hard to follow and hard to maintain.
-        But that'spretty much the only way to do it in code without external Autolayout wrappers like Masonry.
-        Do yourself a favor and don't set up constraints like that if you can help it. You will save yourself a
-        lot of headaches.
-        */
-        
-        let currentScreenSize = UIScreen.mainScreen().bounds.size
-        let padding = sizeForPercent(3.125)
-        let tableViewHeight = sizeForPercent(12.5) * CGFloat(acknowledgements.count)
-        let additionalButtonsTableHeight = sizeForPercent(12.5) * CGFloat(additionalButtons.count)
-        
-        metrics = ["padding":padding,
-            "doublePadding":padding * 2,
-            "tableViewHeight":tableViewHeight,
-            "additionalButtonsTableHeight":additionalButtonsTableHeight]
-        
-        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTable]
-        
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        // We need to save the constraint to manually change the constant when the screen rotates:
-        
-        scrollViewContainerWidth = NSLayoutConstraint(item: scrollViewContainer, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: currentScreenSize.width)
-        
-        mainScrollView.addConstraint(scrollViewContainerWidth!)
-        
-        mainScrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollViewContainer]|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[headerView]|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        var firstFormatString = ""
-        
-        if additionalButtons.count > 0 {
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[additionalButtonsTable]|", options: [], metrics: metrics, views: viewsDictionary))
-            firstFormatString = firstFormatString+"-doublePadding-[additionalButtonsTable(==additionalButtonsTableHeight)]"
-        }
-        
-        if showAcknowledgements {
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[tableHeaderLabel]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[acknowledgementsTableView]|", options: [], metrics: metrics, views: viewsDictionary))
-            firstFormatString = firstFormatString+"-doublePadding-[tableHeaderLabel]-padding-[acknowledgementsTableView(==tableViewHeight)]-doublePadding-"
-        }
-        
-        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format: "V:|[headerView]%@|", firstFormatString), options: [], metrics: metrics, views: viewsDictionary))
-        
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[appName]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[copyrightInfo]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        var secondFormatString = ""
-        
-        if websiteURL != nil {
-            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[websiteButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-            secondFormatString = secondFormatString+"-padding-[websiteButton]"
-        }
-        
-        if contactEmail != nil {
-            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[eMailButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-            
-            if websiteURL != nil {
-                secondFormatString = secondFormatString+"-0-[eMailButton]"
-            } else {
-                secondFormatString = secondFormatString+"-padding-[eMailButton]"
-            }
-        }
-        
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format:"V:|-doublePadding-[appName]-padding-[copyrightInfo]%@-doublePadding-|",secondFormatString), options: [], metrics: metrics, views: viewsDictionary))
+        setConstraints(mainScrollView: mainScrollView, scrollViewContainer: scrollViewContainer, headerView: headerView, appNameLabel: appNameLabel, copyrightInfo: copyrightInfo, eMailButton: eMailButton, websiteButton: websiteButton, tableHeaderLabel: tableHeaderLabel)
     }
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName : navigationBarTitleTextColor
-        ]
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: navigationBarTitleTextColor]
         if navigationController?.viewControllers.first == self {
             let leftItem = UIBarButtonItem(image:closeButtonImage, style: .Plain, target: self, action: Selector("close"))
             navigationItem.leftBarButtonItem = leftItem
@@ -493,6 +326,216 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    private func createMainScrollView() -> UIScrollView {
+        let mainScrollView = UIScrollView()
+        mainScrollView.translatesAutoresizingMaskIntoConstraints = false
+        mainScrollView.backgroundColor = .clearColor()
+        mainScrollView.showsHorizontalScrollIndicator = false
+        mainScrollView.showsVerticalScrollIndicator = showsScrollIndicator
+        return mainScrollView
+    }
+    
+    private func createScrollViewContainer() -> UIView {
+        let scrollViewContainer = UIView()
+        scrollViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        scrollViewContainer.backgroundColor = .clearColor()
+        return scrollViewContainer
+    }
+    
+    private func createHeaderView() -> UIView {
+        let headerView = UIView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.backgroundColor = headerBackgroundColor
+        headerView.layer.borderColor = headerBorderColor.CGColor
+        headerView.layer.borderWidth = 0.5
+        headerView.clipsToBounds = true
+        return headerView
+    }
+    
+    private func createHeaderBackground(headerView headerView: UIView) -> UIImageView {
+        let headerBackground = UIImageView()
+        headerBackground.translatesAutoresizingMaskIntoConstraints = true
+        headerBackground.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        headerBackground.image = headerBackgroundImage
+        headerBackground.contentMode = .ScaleAspectFill
+        headerBackground.frame = headerView.bounds
+        return headerBackground
+    }
+    
+    private func createAndAddNameLabel(headerView headerView: UIView) -> UILabel {
+        let appNameLabel = UILabel()
+        appNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        appNameLabel.font = UIFont.systemFontOfSize(sizeForPercent(5.625), weight: -0.5)
+        
+        if let theFont = fontAppName {
+            appNameLabel.font = theFont
+        }
+        
+        appNameLabel.numberOfLines = 0
+        appNameLabel.backgroundColor = .clearColor()
+        appNameLabel.textAlignment = .Center
+        appNameLabel.text = appName
+        appNameLabel.textColor = headerTextColor
+        headerView.addSubview(appNameLabel)
+        appNameLabel.sizeToFit()
+        appNameLabel.layoutIfNeeded()
+        return appNameLabel
+    }
+    
+    private func createAndAddCopyrightLabel(headerView headerView: UIView) -> UILabel {
+        let copyrightInfo = UILabel()
+        copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
+        copyrightInfo.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
+        
+        if let theFont = fontCopyrightInfo {
+            copyrightInfo.font = theFont
+        }
+        copyrightInfo.numberOfLines = 0
+        copyrightInfo.backgroundColor = .clearColor()
+        copyrightInfo.textAlignment = .Center
+        copyrightInfo.text = "Version \(appVersion!) (\(appBuild!))\n © \(pubYear!) \(copyrightHolderName!)"
+        copyrightInfo.textColor = headerTextColor
+        headerView.addSubview(copyrightInfo)
+        copyrightInfo.sizeToFit()
+        copyrightInfo.layoutIfNeeded()
+        return copyrightInfo
+    }
+    
+    private func setupAndAddHeaderButton(button: UIButton, title: String?, font: UIFont, target: Selector, headerView: UIView) {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(headerTextColor, forState: .Normal)
+        button.setTitle(title, forState: .Normal)
+        button.titleLabel?.font = font
+        button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
+        headerView.addSubview(button)
+    }
+
+    private func createAndAddAdditionalButtonsTable(scrollViewContainer scrollViewContainer: UIView) {
+        additionalButtonsTable.translatesAutoresizingMaskIntoConstraints = false
+        additionalButtonsTable.clipsToBounds = false
+        additionalButtonsTable.delegate = self
+        additionalButtonsTable.dataSource = self
+        additionalButtonsTable.scrollEnabled = false
+        additionalButtonsTable.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        additionalButtonsTable.backgroundColor = .clearColor()
+        additionalButtonsTable.rowHeight = UITableViewAutomaticDimension
+        additionalButtonsTable.estimatedRowHeight = sizeForPercent(12.5)
+        if additionalButtons.count > 0 {
+            scrollViewContainer.addSubview(additionalButtonsTable)
+        }
+    }
+
+    private func createAndAddTableHeaderLabel(scrollViewContainer scrollViewContainer: UIView) -> UILabel {
+        let tableHeaderLabel = UILabel()
+        tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
+        tableHeaderLabel.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
+        
+        if let theFont = fontHeaderLabel {
+            tableHeaderLabel.font = theFont
+        }
+        tableHeaderLabel.numberOfLines = 0
+        tableHeaderLabel.textColor = acknowledgementsHeaderColor
+        tableHeaderLabel.backgroundColor = .clearColor()
+        tableHeaderLabel.textAlignment = .Left
+        tableHeaderLabel.text = String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), appName!)
+        tableHeaderLabel.sizeToFit()
+        tableHeaderLabel.layoutIfNeeded()
+        
+        if showAcknowledgements {
+            scrollViewContainer.addSubview(tableHeaderLabel)
+        }
+        return tableHeaderLabel
+    }
+    
+    private func createAndAddAcknowledgementsTableView(scrollViewContainer scrollViewContainer: UIView) {
+        acknowledgementsTableView.translatesAutoresizingMaskIntoConstraints = false
+        acknowledgementsTableView.clipsToBounds = false
+        acknowledgementsTableView.delegate = self
+        acknowledgementsTableView.dataSource = self
+        acknowledgementsTableView.scrollEnabled = false
+        acknowledgementsTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        acknowledgementsTableView.backgroundColor = .clearColor()
+        acknowledgementsTableView.rowHeight = UITableViewAutomaticDimension
+        acknowledgementsTableView.estimatedRowHeight = sizeForPercent(12.5)
+        if showAcknowledgements {
+            scrollViewContainer.addSubview(acknowledgementsTableView)
+        }
+    }
+
+    private func setConstraints(mainScrollView mainScrollView: UIScrollView, scrollViewContainer: UIView, headerView: UIView, appNameLabel: UILabel, copyrightInfo: UILabel, eMailButton: UIButton, websiteButton: UIButton, tableHeaderLabel: UILabel) {
+        /*
+        A word of warning!
+        Here comes all the Autolayout mess. Seriously, it's horrible. It's ugly, hard to follow and hard to maintain.
+        But that'spretty much the only way to do it in code without external Autolayout wrappers like Masonry.
+        Do yourself a favor and don't set up constraints like that if you can help it. You will save yourself a
+        lot of headaches.
+        */
+        
+        let currentScreenSize = UIScreen.mainScreen().bounds.size
+        let padding = sizeForPercent(3.125)
+        let tableViewHeight = sizeForPercent(12.5) * CGFloat(acknowledgements.count)
+        let additionalButtonsTableHeight = sizeForPercent(12.5) * CGFloat(additionalButtons.count)
+        
+        metrics = ["padding":padding,
+            "doublePadding":padding * 2,
+            "tableViewHeight":tableViewHeight,
+            "additionalButtonsTableHeight":additionalButtonsTableHeight]
+        
+        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTable]
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
+        
+        // We need to save the constraint to manually change the constant when the screen rotates:
+        
+        scrollViewContainerWidth = NSLayoutConstraint(item: scrollViewContainer, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: currentScreenSize.width)
+        
+        mainScrollView.addConstraint(scrollViewContainerWidth!)
+        
+        mainScrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollViewContainer]|", options: [], metrics: metrics, views: viewsDictionary))
+        
+        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[headerView]|", options: [], metrics: metrics, views: viewsDictionary))
+        
+        var firstFormatString = ""
+        
+        if additionalButtons.count > 0 {
+            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[additionalButtonsTable]|", options: [], metrics: metrics, views: viewsDictionary))
+            firstFormatString = firstFormatString+"-doublePadding-[additionalButtonsTable(==additionalButtonsTableHeight)]"
+        }
+        
+        if showAcknowledgements {
+            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[tableHeaderLabel]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
+            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[acknowledgementsTableView]|", options: [], metrics: metrics, views: viewsDictionary))
+            firstFormatString = firstFormatString+"-doublePadding-[tableHeaderLabel]-padding-[acknowledgementsTableView(==tableViewHeight)]-doublePadding-"
+        }
+        
+        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format: "V:|[headerView]%@|", firstFormatString), options: [], metrics: metrics, views: viewsDictionary))
+        
+        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[appName]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
+        
+        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[copyrightInfo]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
+        
+        var secondFormatString = ""
+        
+        if websiteURL != nil {
+            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[websiteButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
+            secondFormatString = secondFormatString+"-padding-[websiteButton]"
+        }
+        
+        if contactEmail != nil {
+            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[eMailButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
+            
+            if websiteURL != nil {
+                secondFormatString = secondFormatString+"-0-[eMailButton]"
+            } else {
+                secondFormatString = secondFormatString+"-padding-[eMailButton]"
+            }
+        }
+        
+        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format:"V:|-doublePadding-[appName]-padding-[copyrightInfo]%@-doublePadding-|",secondFormatString), options: [], metrics: metrics, views: viewsDictionary))
+    }
+    
     
     //MARK:- Action methods
     
