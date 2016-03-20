@@ -123,10 +123,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     /// Font used for the license text in the pod detail view
     public var fontLicenseText: UIFont?
     
-    private var acknowledgements: NSArray = NSArray()
-    private var metrics: Dictionary <String,NSObject> = Dictionary()
+    private var acknowledgements = [[String:String]]()
+    private var metrics: [String:AnyObject]!
     private var scrollViewContainerWidth: NSLayoutConstraint?
-    private var additionalButtons: NSMutableArray = NSMutableArray()
+    private var additionalButtons = [[String:String]]()
 
     private let additionalButtonsTable = UITableView(frame: .zero, style: .Grouped)
     private let acknowledgementsTableView = UITableView(frame: .zero, style: .Grouped)
@@ -184,8 +184,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         self.navigationController?.navigationBar.tintColor = self.navigationBarTintColor
         
         if let ackFile = NSBundle.mainBundle().pathForResource(self.acknowledgementsFilename, ofType: "plist") {
-            let dict = NSDictionary(contentsOfFile: ackFile)
-            self.acknowledgements = self.reformatAcknowledgementsDictionary(dict)
+            if let dict = NSDictionary(contentsOfFile: ackFile) {
+                self.acknowledgements = self.reformatAcknowledgementsDictionary(dict)
+            }
         }
         
         let mainScrollView = UIScrollView()
@@ -455,9 +456,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             
             var title = ""
             if tableView == additionalButtonsTable {
-                title = (self.additionalButtons[indexPath.row].valueForKey("title") as? String)!
+                title = (self.additionalButtons[indexPath.row].keys.first)!
             } else {
-                title = (self.acknowledgements[indexPath.row].valueForKey("title") as? String)!
+                title = (self.acknowledgements[indexPath.row].keys.first)!
             }
             cell?.textLabel?.textColor = self.tableViewTextColor
             cell?.backgroundColor = self.tableViewBackgroundColor
@@ -472,12 +473,12 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell!.selected = false
         
-        var theDict: NSDictionary? = nil
+        var theDict: [String: String]?
         
         if tableView == additionalButtonsTable {
-            theDict = self.additionalButtons[indexPath.row] as? NSDictionary
+            theDict = self.additionalButtons[indexPath.row]
         } else {
-            theDict = self.acknowledgements[indexPath.row] as? NSDictionary
+            theDict = self.acknowledgements[indexPath.row]
         }
         let viewController = RFAboutViewDetailViewController(infoDictionary: theDict)
         viewController.showsScrollIndicator = self.showsScrollIndicator
@@ -570,7 +571,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     - parameter content: The text to display in the detail view
     */
     public func addAdditionalButton(title: String, content: String) {
-        self.additionalButtons.addObject(["title":title,"content":content])
+        self.additionalButtons.append([title:content])
     }
     
     //MARK:- Helper functions
@@ -591,19 +592,17 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         return nil
     }
     
-    private func reformatAcknowledgementsDictionary(originalDict: NSDictionary?) -> NSArray {
-        let tmp: NSMutableArray = originalDict?.objectForKey("PreferenceSpecifiers") as AnyObject! as! NSMutableArray
+    private func reformatAcknowledgementsDictionary(originalDict: NSDictionary) -> [[String: String]] {
+        let tmp: NSMutableArray = originalDict.objectForKey("PreferenceSpecifiers")?.mutableCopy() as AnyObject! as! NSMutableArray
         
-        let theDict = tmp.mutableCopy() as! NSMutableArray
+        tmp.removeObjectAtIndex(0)
+        tmp.removeLastObject()
         
-        theDict.removeObjectAtIndex(0)
-        theDict.removeLastObject()
+        var outputArray = [[String:String]]()
         
-        let outputArray = NSMutableArray()
-        
-        for innerDict: AnyObject in theDict {
-            if let tempTile = innerDict.objectForKey("Title") as! String!, let tempContent = innerDict.objectForKey("FooterText") as! String! {
-                outputArray.addObject(["title":tempTile,"content":tempContent])
+        for innerDict: AnyObject in tmp {
+            if let tempTitle = innerDict.objectForKey("Title") as! String!, let tempContent = innerDict.objectForKey("FooterText") as! String! {
+                outputArray.append([tempTitle:tempContent])
             }
         }
         return outputArray
