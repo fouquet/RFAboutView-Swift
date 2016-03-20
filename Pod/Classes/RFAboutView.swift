@@ -58,22 +58,22 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     public var closeButtonImage: UIImage? = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
     
     /// Determines if the header background image should be blurred. Defaults to true.
-    public var blurHeaderBackground: Bool = true
+    public var blurHeaderBackground = true
     
     /// Effect style of the header blur. Defaults to UIBlurEffectStyleLight.
     public var blurStyle: UIBlurEffectStyle = .Light
     
     /// Determines if diagnostic information (app title, version, build, device etc.) should be included in the email when the user taps the email link. This information can be very useful to debug certain problems and can be deleted by the user if they don't want to send this information. Defaults to true.
-    public var includeDiagnosticInformationInEmail: Bool = true
+    public var includeDiagnosticInformationInEmail = true
     
     /// Determines if the acknowledgements tableview should be shown. Defaults to true.
-    public var showAcknowledgements: Bool = true
+    public var showAcknowledgements = true
     
     /// Determines if the main scrollview should show a scroll indicator. Defaults to true.
-    public var showsScrollIndicator: Bool = true
+    public var showsScrollIndicator = true
     
     /// File name of the acknowledgements plist *without* extension. Defaults to "Acknowledgements".
-    public var acknowledgementsFilename: String = "Acknowledgements"
+    public var acknowledgementsFilename = "Acknowledgements"
     
     /// The name of the app. Leave nil to use the CFBundleName.
     public var appName: String?
