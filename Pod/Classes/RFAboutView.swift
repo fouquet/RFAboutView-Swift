@@ -226,15 +226,12 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         let appName = UILabel()
         appName.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 8.2, *) {
-            appName.font = UIFont.systemFontOfSize(self.sizeForPercent(5.625), weight: -0.5)
-        } else {
-            appName.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(5.625))
-        }
-        
+        appName.font = UIFont.systemFontOfSize(self.sizeForPercent(5.625), weight: -0.5)
+
         if let theFont = self.fontAppName {
             appName.font = theFont
         }
+        
         appName.numberOfLines = 0
         appName.backgroundColor = .clearColor()
         appName.textAlignment = .Center
@@ -246,11 +243,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         let copyrightInfo = UILabel()
         copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 8.2, *) {
-            copyrightInfo.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
-        } else {
-            copyrightInfo.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
-        }
+        copyrightInfo.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+
         if let theFont = self.fontCopyrightInfo {
             copyrightInfo.font = theFont
         }
@@ -269,11 +263,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             websiteButton.translatesAutoresizingMaskIntoConstraints = false
             websiteButton.setTitle(self.websiteURLTitle, forState: .Normal)
             websiteButton.setTitleColor(self.headerTextColor, forState: .Normal)
-            if #available(iOS 8.2, *) {
-                websiteButton.titleLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
-            } else {
-                websiteButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
-            }
+            websiteButton.titleLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+
             if let theFont = self.fontWebsiteButton {
                 websiteButton.titleLabel?.font = theFont
             }
@@ -287,11 +278,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             eMailButton.translatesAutoresizingMaskIntoConstraints = false
             eMailButton.setTitle(self.contactEmailTitle, forState: .Normal)
             eMailButton.setTitleColor(self.headerTextColor, forState: .Normal)
-            if #available(iOS 8.2, *) {
-                eMailButton.titleLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
-            } else {
-                eMailButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
-            }
+            eMailButton.titleLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+
             if let theFont = self.fontEmailButton {
                 eMailButton.titleLabel?.font = theFont
             }
@@ -314,11 +302,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         let tableHeaderLabel = UILabel()
         tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 8.2, *) {
-            tableHeaderLabel.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
-        } else {
-            tableHeaderLabel.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.375))
-        }
+        tableHeaderLabel.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+
         if let theFont = self.fontHeaderLabel {
             tableHeaderLabel.font = theFont
         }
@@ -455,11 +440,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         if cell==nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
-            if #available(iOS 8.2, *) {
-                cell?.textLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.688), weight: -1)
-            } else {
-                cell?.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.sizeForPercent(4.688))
-            }
+            cell?.textLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.688), weight: -1)
+
             if let theFont = self.fontTableCellText {
                 cell?.textLabel?.font = theFont
             }
@@ -681,16 +663,13 @@ public class RFAboutViewDetailViewController: UIViewController {
         contentTextView.backgroundColor = .clearColor()
         contentTextView.spellCheckingType = .No
         contentTextView.textColor = self.textColor
-        if #available(iOS 8.2, *) {
-            contentTextView.font = UIFont.systemFontOfSize(self.sizeForPercent(4.063), weight: -1)
-        } else {
-            contentTextView.font = UIFont(name: "HelveticaNeue-Light", size:self.sizeForPercent(4.063))
-        }
+        contentTextView.font = UIFont.systemFontOfSize(self.sizeForPercent(4.063), weight: -1)
+
         if let theFont = self.fontLicenseText {
             contentTextView.font = theFont
         }
         contentTextView.text = self.infoDict["content"] as! String!
         
         self.view.addSubview(contentTextView)
-    }    
+    }
 }
