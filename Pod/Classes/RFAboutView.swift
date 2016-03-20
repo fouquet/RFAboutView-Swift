@@ -55,7 +55,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     public var headerBackgroundImage: UIImage?
     
     /// The image for the button to dismiss the RFAboutViewController. Defaults to image of "X".
-    public var closeButtonImage: UIImage? = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
+    public var closeButtonImage = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
     
     /// Determines if the header background image should be blurred. Defaults to true.
     public var blurHeaderBackground = true
@@ -125,9 +125,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     private var acknowledgements = [[String:String]]()
     private var metrics: [String:AnyObject]!
-    private var scrollViewContainerWidth: NSLayoutConstraint?
     private var additionalButtons = [[String:String]]()
 
+    private var scrollViewContainerWidth: NSLayoutConstraint?
     private let additionalButtonsTable = UITableView(frame: .zero, style: .Grouped)
     private let acknowledgementsTableView = UITableView(frame: .zero, style: .Grouped)
     
@@ -252,7 +252,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         copyrightInfo.numberOfLines = 0
         copyrightInfo.backgroundColor = .clearColor()
         copyrightInfo.textAlignment = .Center
-        copyrightInfo.text = String(format: "Version %@ (%@)\n© %@ %@", self.appVersion!, self.appBuild!, self.pubYear!, self.copyrightHolderName!) as String
+        copyrightInfo.text = "Version \(self.appVersion!) (\(self.appBuild!))\n © \(self.pubYear!) \(self.copyrightHolderName!)"
         copyrightInfo.textColor = self.headerTextColor
         headerView.addSubview(copyrightInfo)
         copyrightInfo.sizeToFit()
@@ -312,7 +312,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         tableHeaderLabel.textColor = self.acknowledgementsHeaderColor
         tableHeaderLabel.backgroundColor = .clearColor()
         tableHeaderLabel.textAlignment = .Left
-        tableHeaderLabel.text = NSLocalizedString(String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), self.appName!) as String, comment: "Acknowlegdments header title")
+        tableHeaderLabel.text = String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), self.appName!)
         headerView.addSubview(tableHeaderLabel)
         tableHeaderLabel.sizeToFit()
         tableHeaderLabel.layoutIfNeeded()
@@ -480,7 +480,11 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         } else {
             theDict = self.acknowledgements[indexPath.row]
         }
-        let viewController = RFAboutViewDetailViewController(infoDictionary: theDict)
+        showDetailViewController(theDict)
+    }
+    
+    private func showDetailViewController(infoDictionary: [String:String]) {
+        let viewController = RFAboutViewDetailViewController(infoDictionary: infoDictionary)
         viewController.showsScrollIndicator = self.showsScrollIndicator
         viewController.backgroundColor = self.backgroundColor
         viewController.tintColor = self.tintColor
@@ -523,7 +527,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             messageString = String(format: NSLocalizedString("<p>[Please insert your message here]</p><p><em>For support inquiries, please include the following information. These make it easier for me to help you. Thank you!</em><p><hr><p><strong>Support Information</strong></p></p>%@ Version %@ (%@)<br>%@ (%@)<br>iOS %@ (%@)</p><hr>", comment: "Prefilled Email message text"),self.appName!, self.appVersion!, self.appBuild!, device, deviceString!, iOSVersion, lang)
         }
         
-        let subject = String(format: "%@ %@", self.appName!, self.appVersion!)
+        let subject = "\(self.appName!) \(self.appVersion!)"
         
         let mailController = MFMailComposeViewController()
         mailController.mailComposeDelegate = self
@@ -533,7 +537,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             mailController.setToRecipients([self.contactEmail!])
             self.presentViewController(mailController, animated: true, completion: nil)
         } else {
-            let supportText = String(format: "\"%@ Version %@ (%@), %@ (%@), iOS %@ (%@)\"",self.appName!, self.appVersion!, self.appBuild!, device, deviceString!, iOSVersion, lang)
+            let supportText = "\"\(self.appName!) Version \(self.appVersion!) (\(self.appBuild!)), \(device) (\(deviceString!)), iOS \(iOSVersion) (\(lang))\""
             
             let alert = UIAlertController(title: NSLocalizedString("Cannot send Email", comment: "Cannot send Email"), message: String(format:NSLocalizedString("Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!", comment: "Error message: no email accounts available"),self.contactEmail!, supportText, lang), preferredStyle: UIAlertControllerStyle.Alert)
             let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertActionStyle.Cancel, handler: { (action) -> Void in
