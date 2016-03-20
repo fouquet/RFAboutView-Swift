@@ -18,8 +18,7 @@ public class RFAboutViewDetailViewController: UIViewController {
     
     public init(infoDictionary: [String:String]) {
         super.init(nibName: nil, bundle: nil)
-        
-        self.infoDict = infoDictionary
+        infoDict = infoDictionary
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -29,32 +28,32 @@ public class RFAboutViewDetailViewController: UIViewController {
     public override func loadView() {
         super.loadView()
         
-        self.view.backgroundColor = self.backgroundColor
-        self.view.tintColor = self.tintColor
+        view.backgroundColor = backgroundColor
+        view.tintColor = tintColor
         
-        self.navigationItem.title = self.infoDict.keys.first
-        self.navigationController?.toolbarHidden = true
+        navigationItem.title = infoDict.keys.first
+        navigationController?.toolbarHidden = true
         
         let contentTextView = UITextView()
-        contentTextView.frame = self.view.bounds
+        contentTextView.frame = view.bounds
         contentTextView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
-        contentTextView.textContainerInset = UIEdgeInsetsMake(self.sizeForPercent(3.125), self.sizeForPercent(3.125), self.sizeForPercent(3.125), self.sizeForPercent(3.125))
+        contentTextView.textContainerInset = UIEdgeInsetsMake(sizeForPercent(3.125), sizeForPercent(3.125), sizeForPercent(3.125), sizeForPercent(3.125))
         contentTextView.userInteractionEnabled = true
         contentTextView.selectable = true
         contentTextView.editable = false
         contentTextView.scrollEnabled = true
         contentTextView.showsHorizontalScrollIndicator = false
-        contentTextView.showsVerticalScrollIndicator = self.showsScrollIndicator
+        contentTextView.showsVerticalScrollIndicator = showsScrollIndicator
         contentTextView.backgroundColor = .clearColor()
         contentTextView.spellCheckingType = .No
-        contentTextView.textColor = self.textColor
-        contentTextView.font = UIFont.systemFontOfSize(self.sizeForPercent(4.063), weight: -1)
+        contentTextView.textColor = textColor
+        contentTextView.font = UIFont.systemFontOfSize(sizeForPercent(4.063), weight: -1)
         
-        if let theFont = self.fontLicenseText {
+        if let theFont = fontLicenseText {
             contentTextView.font = theFont
         }
-        contentTextView.text = self.infoDict.values.first
+        contentTextView.text = infoDict.values.first
         
-        self.view.addSubview(contentTextView)
+        view.addSubview(contentTextView)
     }
 }

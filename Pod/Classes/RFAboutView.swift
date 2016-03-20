@@ -153,9 +153,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     public init(appName: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String, appVersion: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String, appBuild: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? String, copyrightHolderName: String? = "Developer", contactEmail: String? = nil, contactEmailTitle: String? = nil, websiteURL: NSURL? = nil, websiteURLTitle: String? = nil, pubYear: String? = String(NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: NSDate()).year)) {
         super.init(nibName: nil, bundle: nil)
         
-        self.navigationViewBackgroundColor = self.navigationController?.view.backgroundColor // Set from system default
-        self.navigationBarBarTintColor = self.navigationController?.navigationBar.barTintColor // Set from system default
-        self.navigationBarTintColor = self.tintColor // Set from system default
+        navigationViewBackgroundColor = navigationController?.view.backgroundColor // Set from system default
+        navigationBarBarTintColor = navigationController?.navigationBar.barTintColor // Set from system default
+        navigationBarTintColor = tintColor // Set from system default
 
         self.appName = appName ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String
         self.appVersion = appVersion ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String
@@ -176,16 +176,16 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         super.loadView()
         
         // Set up the view
-        self.view.backgroundColor = self.backgroundColor
-        self.view.tintColor = self.tintColor
-        self.navigationItem.leftBarButtonItem?.tintColor = self.tintColor
-        self.navigationController?.view.backgroundColor = self.navigationViewBackgroundColor
-        self.navigationController?.navigationBar.barTintColor = self.navigationBarBarTintColor
-        self.navigationController?.navigationBar.tintColor = self.navigationBarTintColor
+        view.backgroundColor = backgroundColor
+        view.tintColor = tintColor
+        navigationItem.leftBarButtonItem?.tintColor = tintColor
+        navigationController?.view.backgroundColor = navigationViewBackgroundColor
+        navigationController?.navigationBar.barTintColor = navigationBarBarTintColor
+        navigationController?.navigationBar.tintColor = navigationBarTintColor
         
-        if let ackFile = NSBundle.mainBundle().pathForResource(self.acknowledgementsFilename, ofType: "plist") {
+        if let ackFile = NSBundle.mainBundle().pathForResource(acknowledgementsFilename, ofType: "plist") {
             if let dict = NSDictionary(contentsOfFile: ackFile) {
-                self.acknowledgements = self.reformatAcknowledgementsDictionary(dict)
+                acknowledgements = reformatAcknowledgementsDictionary(dict)
             }
         }
         
@@ -193,8 +193,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         mainScrollView.translatesAutoresizingMaskIntoConstraints = false
         mainScrollView.backgroundColor = .clearColor()
         mainScrollView.showsHorizontalScrollIndicator = false
-        mainScrollView.showsVerticalScrollIndicator = self.showsScrollIndicator
-        self.view.addSubview(mainScrollView)
+        mainScrollView.showsVerticalScrollIndicator = showsScrollIndicator
+        view.addSubview(mainScrollView)
         
         let scrollViewContainer = UIView()
         scrollViewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -203,8 +203,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         let headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.backgroundColor = self.headerBackgroundColor
-        headerView.layer.borderColor = self.headerBorderColor.CGColor
+        headerView.backgroundColor = headerBackgroundColor
+        headerView.layer.borderColor = headerBorderColor.CGColor
         headerView.layer.borderWidth = 0.5
         headerView.clipsToBounds = true
         scrollViewContainer.addSubview(headerView)
@@ -212,61 +212,61 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let headerBackground = UIImageView()
         headerBackground.translatesAutoresizingMaskIntoConstraints = true
         headerBackground.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        headerBackground.image = self.headerBackgroundImage
+        headerBackground.image = headerBackgroundImage
         headerBackground.contentMode = .ScaleAspectFill
         headerBackground.frame = headerView.bounds
         headerView.addSubview(headerBackground)
         
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.blurStyle))
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
         visualEffectView.translatesAutoresizingMaskIntoConstraints = true
         visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
-        if self.headerBackgroundImage != nil {
+        if headerBackgroundImage != nil {
             headerBackground.addSubview(visualEffectView)
         }
         
-        let appName = UILabel()
-        appName.translatesAutoresizingMaskIntoConstraints = false
-        appName.font = UIFont.systemFontOfSize(self.sizeForPercent(5.625), weight: -0.5)
+        let appNameLabel = UILabel()
+        appNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        appNameLabel.font = UIFont.systemFontOfSize(sizeForPercent(5.625), weight: -0.5)
 
-        if let theFont = self.fontAppName {
-            appName.font = theFont
+        if let theFont = fontAppName {
+            appNameLabel.font = theFont
         }
         
-        appName.numberOfLines = 0
-        appName.backgroundColor = .clearColor()
-        appName.textAlignment = .Center
-        appName.text = self.appName
-        appName.textColor = self.headerTextColor
-        headerView.addSubview(appName)
-        appName.sizeToFit()
-        appName.layoutIfNeeded()
+        appNameLabel.numberOfLines = 0
+        appNameLabel.backgroundColor = .clearColor()
+        appNameLabel.textAlignment = .Center
+        appNameLabel.text = appName
+        appNameLabel.textColor = headerTextColor
+        headerView.addSubview(appNameLabel)
+        appNameLabel.sizeToFit()
+        appNameLabel.layoutIfNeeded()
         
         let copyrightInfo = UILabel()
         copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
-        copyrightInfo.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+        copyrightInfo.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
 
-        if let theFont = self.fontCopyrightInfo {
+        if let theFont = fontCopyrightInfo {
             copyrightInfo.font = theFont
         }
         copyrightInfo.numberOfLines = 0
         copyrightInfo.backgroundColor = .clearColor()
         copyrightInfo.textAlignment = .Center
-        copyrightInfo.text = "Version \(self.appVersion!) (\(self.appBuild!))\n © \(self.pubYear!) \(self.copyrightHolderName!)"
-        copyrightInfo.textColor = self.headerTextColor
+        copyrightInfo.text = "Version \(appVersion!) (\(appBuild!))\n © \(pubYear!) \(copyrightHolderName!)"
+        copyrightInfo.textColor = headerTextColor
         headerView.addSubview(copyrightInfo)
         copyrightInfo.sizeToFit()
         copyrightInfo.layoutIfNeeded()
         
         let websiteButton = UIButton(type: .Custom)
         
-        if self.websiteURL != nil {
+        if websiteURL != nil {
             websiteButton.translatesAutoresizingMaskIntoConstraints = false
-            websiteButton.setTitle(self.websiteURLTitle, forState: .Normal)
-            websiteButton.setTitleColor(self.headerTextColor, forState: .Normal)
-            websiteButton.titleLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+            websiteButton.setTitle(websiteURLTitle, forState: .Normal)
+            websiteButton.setTitleColor(headerTextColor, forState: .Normal)
+            websiteButton.titleLabel?.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
 
-            if let theFont = self.fontWebsiteButton {
+            if let theFont = fontWebsiteButton {
                 websiteButton.titleLabel?.font = theFont
             }
             websiteButton.addTarget(self, action: "goToWebsite", forControlEvents: .TouchUpInside)
@@ -275,13 +275,13 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         let eMailButton = UIButton(type: .Custom)
         
-        if self.contactEmail != nil {
+        if contactEmail != nil {
             eMailButton.translatesAutoresizingMaskIntoConstraints = false
-            eMailButton.setTitle(self.contactEmailTitle, forState: .Normal)
-            eMailButton.setTitleColor(self.headerTextColor, forState: .Normal)
-            eMailButton.titleLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+            eMailButton.setTitle(contactEmailTitle, forState: .Normal)
+            eMailButton.setTitleColor(headerTextColor, forState: .Normal)
+            eMailButton.titleLabel?.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
 
-            if let theFont = self.fontEmailButton {
+            if let theFont = fontEmailButton {
                 eMailButton.titleLabel?.font = theFont
             }
             eMailButton.addTarget(self, action: "email", forControlEvents: .TouchUpInside)
@@ -296,28 +296,28 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         additionalButtonsTable.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
         additionalButtonsTable.backgroundColor = .clearColor()
         additionalButtonsTable.rowHeight = UITableViewAutomaticDimension
-        additionalButtonsTable.estimatedRowHeight = self.sizeForPercent(12.5)
-        if self.additionalButtons.count > 0 {
+        additionalButtonsTable.estimatedRowHeight = sizeForPercent(12.5)
+        if additionalButtons.count > 0 {
             scrollViewContainer.addSubview(additionalButtonsTable)
         }
         
         let tableHeaderLabel = UILabel()
         tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        tableHeaderLabel.font = UIFont.systemFontOfSize(self.sizeForPercent(4.375), weight: -1)
+        tableHeaderLabel.font = UIFont.systemFontOfSize(sizeForPercent(4.375), weight: -1)
 
-        if let theFont = self.fontHeaderLabel {
+        if let theFont = fontHeaderLabel {
             tableHeaderLabel.font = theFont
         }
         tableHeaderLabel.numberOfLines = 0
-        tableHeaderLabel.textColor = self.acknowledgementsHeaderColor
+        tableHeaderLabel.textColor = acknowledgementsHeaderColor
         tableHeaderLabel.backgroundColor = .clearColor()
         tableHeaderLabel.textAlignment = .Left
-        tableHeaderLabel.text = String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), self.appName!)
+        tableHeaderLabel.text = String(format: NSLocalizedString("%@ makes use of the following third party libraries. Many thanks to the developers making them available!", comment: "Acknowlegdments header title"), appName!)
         headerView.addSubview(tableHeaderLabel)
         tableHeaderLabel.sizeToFit()
         tableHeaderLabel.layoutIfNeeded()
         
-        if self.showAcknowledgements {
+        if showAcknowledgements {
             scrollViewContainer.addSubview(tableHeaderLabel)
         }
 
@@ -329,8 +329,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         acknowledgementsTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
         acknowledgementsTableView.backgroundColor = .clearColor()
         acknowledgementsTableView.rowHeight = UITableViewAutomaticDimension
-        acknowledgementsTableView.estimatedRowHeight = self.sizeForPercent(12.5)
-        if self.showAcknowledgements {
+        acknowledgementsTableView.estimatedRowHeight = sizeForPercent(12.5)
+        if showAcknowledgements {
             scrollViewContainer.addSubview(acknowledgementsTableView)
         }
         
@@ -343,80 +343,80 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         */
         
         let currentScreenSize = UIScreen.mainScreen().bounds.size
-        let padding = self.sizeForPercent(3.125)
-        let tableViewHeight = self.sizeForPercent(12.5) * CGFloat(self.acknowledgements.count)
-        let additionalButtonsTableHeight = self.sizeForPercent(12.5) * CGFloat(self.additionalButtons.count)
+        let padding = sizeForPercent(3.125)
+        let tableViewHeight = sizeForPercent(12.5) * CGFloat(acknowledgements.count)
+        let additionalButtonsTableHeight = sizeForPercent(12.5) * CGFloat(additionalButtons.count)
         
-        self.metrics = ["padding":padding,
+        metrics = ["padding":padding,
             "doublePadding":padding * 2,
             "tableViewHeight":tableViewHeight,
             "additionalButtonsTableHeight":additionalButtonsTableHeight]
         
-        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appName,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTable]
+        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTable]
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[mainScrollView]|", options: [], metrics: self.metrics, views: viewsDictionary))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[mainScrollView]|", options: [], metrics: self.metrics, views: viewsDictionary))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
         
         // We need to save the constraint to manually change the constant when the screen rotates:
         
-        self.scrollViewContainerWidth = NSLayoutConstraint(item: scrollViewContainer, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: currentScreenSize.width)
+        scrollViewContainerWidth = NSLayoutConstraint(item: scrollViewContainer, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: currentScreenSize.width)
         
-        mainScrollView.addConstraint(self.scrollViewContainerWidth!)
+        mainScrollView.addConstraint(scrollViewContainerWidth!)
         
-        mainScrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollViewContainer]|", options: [], metrics: self.metrics, views: viewsDictionary))
+        mainScrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollViewContainer]|", options: [], metrics: metrics, views: viewsDictionary))
         
-        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[headerView]|", options: [], metrics: self.metrics, views: viewsDictionary))
+        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[headerView]|", options: [], metrics: metrics, views: viewsDictionary))
         
         var firstFormatString = ""
         
-        if self.additionalButtons.count > 0 {
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[additionalButtonsTable]|", options: [], metrics: self.metrics, views: viewsDictionary))
+        if additionalButtons.count > 0 {
+            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[additionalButtonsTable]|", options: [], metrics: metrics, views: viewsDictionary))
             firstFormatString = firstFormatString+"-doublePadding-[additionalButtonsTable(==additionalButtonsTableHeight)]"
         }
         
-        if self.showAcknowledgements {
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[tableHeaderLabel]-padding-|", options: [], metrics: self.metrics, views: viewsDictionary))
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[acknowledgementsTableView]|", options: [], metrics: self.metrics, views: viewsDictionary))
+        if showAcknowledgements {
+            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[tableHeaderLabel]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
+            scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[acknowledgementsTableView]|", options: [], metrics: metrics, views: viewsDictionary))
             firstFormatString = firstFormatString+"-doublePadding-[tableHeaderLabel]-padding-[acknowledgementsTableView(==tableViewHeight)]-doublePadding-"
         }
         
-        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format: "V:|[headerView]%@|", firstFormatString), options: [], metrics: self.metrics, views: viewsDictionary))
+        scrollViewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format: "V:|[headerView]%@|", firstFormatString), options: [], metrics: metrics, views: viewsDictionary))
         
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[appName]-padding-|", options: [], metrics: self.metrics, views: viewsDictionary))
+        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[appName]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
         
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[copyrightInfo]-padding-|", options: [], metrics: self.metrics, views: viewsDictionary))
+        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[copyrightInfo]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
         
         var secondFormatString = ""
         
-        if self.websiteURL != nil {
-            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[websiteButton]-padding-|", options: [], metrics: self.metrics, views: viewsDictionary))
+        if websiteURL != nil {
+            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[websiteButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
             secondFormatString = secondFormatString+"-padding-[websiteButton]"
         }
         
-        if self.contactEmail != nil {
-            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[eMailButton]-padding-|", options: [], metrics: self.metrics, views: viewsDictionary))
+        if contactEmail != nil {
+            headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-padding-[eMailButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
             
-            if self.websiteURL != nil {
+            if websiteURL != nil {
                 secondFormatString = secondFormatString+"-0-[eMailButton]"
             } else {
                 secondFormatString = secondFormatString+"-padding-[eMailButton]"
             }
         }
         
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format:"V:|-doublePadding-[appName]-padding-[copyrightInfo]%@-doublePadding-|",secondFormatString), options: [], metrics: self.metrics, views: viewsDictionary))
+        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(String(format:"V:|-doublePadding-[appName]-padding-[copyrightInfo]%@-doublePadding-|",secondFormatString), options: [], metrics: metrics, views: viewsDictionary))
     }
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName : self.navigationBarTitleTextColor
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName : navigationBarTitleTextColor
         ]
-        if self.navigationController?.viewControllers.first == self {
-            let leftItem = UIBarButtonItem(image:self.closeButtonImage, style: .Plain, target: self, action: Selector("close"))
-            self.navigationItem.leftBarButtonItem = leftItem
+        if navigationController?.viewControllers.first == self {
+            let leftItem = UIBarButtonItem(image:closeButtonImage, style: .Plain, target: self, action: Selector("close"))
+            navigationItem.leftBarButtonItem = leftItem
         }
-        self.navigationItem.title = NSLocalizedString("About", comment:"UINavigationBar Title")
+        navigationItem.title = NSLocalizedString("About", comment:"UINavigationBar Title")
     }
     
     //MARK:- UITableView Delegate & Data Source
@@ -441,14 +441,14 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         if cell==nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
-            cell?.textLabel?.font = UIFont.systemFontOfSize(self.sizeForPercent(4.688), weight: -1)
+            cell?.textLabel?.font = UIFont.systemFontOfSize(sizeForPercent(4.688), weight: -1)
 
-            if let theFont = self.fontTableCellText {
+            if let theFont = fontTableCellText {
                 cell?.textLabel?.font = theFont
             }
             cell?.selectionStyle = .Default
             
-            if let cellBGColor = self.tableViewSelectionColor {
+            if let cellBGColor = tableViewSelectionColor {
                 let bgColorView = UIView()
                 bgColorView.backgroundColor = cellBGColor
                 cell?.selectedBackgroundView = bgColorView
@@ -456,12 +456,12 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             
             var title = ""
             if tableView == additionalButtonsTable {
-                title = (self.additionalButtons[indexPath.row].keys.first)!
+                title = (additionalButtons[indexPath.row].keys.first)!
             } else {
-                title = (self.acknowledgements[indexPath.row].keys.first)!
+                title = (acknowledgements[indexPath.row].keys.first)!
             }
-            cell?.textLabel?.textColor = self.tableViewTextColor
-            cell?.backgroundColor = self.tableViewBackgroundColor
+            cell?.textLabel?.textColor = tableViewTextColor
+            cell?.backgroundColor = tableViewBackgroundColor
             cell?.textLabel!.text = title
             cell?.accessoryType = .DisclosureIndicator
         }
@@ -476,37 +476,37 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         var theDict = [String: String]()
         
         if tableView == additionalButtonsTable {
-            theDict = self.additionalButtons[indexPath.row]
+            theDict = additionalButtons[indexPath.row]
         } else {
-            theDict = self.acknowledgements[indexPath.row]
+            theDict = acknowledgements[indexPath.row]
         }
         showDetailViewController(theDict)
     }
     
     private func showDetailViewController(infoDictionary: [String:String]) {
         let viewController = RFAboutViewDetailViewController(infoDictionary: infoDictionary)
-        viewController.showsScrollIndicator = self.showsScrollIndicator
-        viewController.backgroundColor = self.backgroundColor
-        viewController.tintColor = self.tintColor
-        viewController.fontLicenseText = self.fontLicenseText
-        viewController.textColor = self.acknowledgementsHeaderColor
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        viewController.showsScrollIndicator = showsScrollIndicator
+        viewController.backgroundColor = backgroundColor
+        viewController.tintColor = tintColor
+        viewController.fontLicenseText = fontLicenseText
+        viewController.textColor = acknowledgementsHeaderColor
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     //MARK:- Action methods
     
     public func close() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     public func goToWebsite() {
         if #available(iOS 9.0, *) {
-            let webVC = SFSafariViewController(URL: self.websiteURL!)
+            let webVC = SFSafariViewController(URL: websiteURL!)
             webVC.delegate = self
-            self.presentViewController(webVC, animated: true, completion: nil)
+            presentViewController(webVC, animated: true, completion: nil)
         } else {
-            UIApplication.sharedApplication().openURL(self.websiteURL!)
+            UIApplication.sharedApplication().openURL(websiteURL!)
         }
     }
     
@@ -519,27 +519,27 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         let iOSVersion = UIDevice.currentDevice().systemVersion as String
         let device = UIDevice.currentDevice().model as String
-        let deviceString = self.platformModelString()
+        let deviceString = platformModelString()
         let lang = NSLocale.preferredLanguages().first ?? ""
         var messageString = ""
         
-        if self.includeDiagnosticInformationInEmail {
-            messageString = String(format: NSLocalizedString("<p>[Please insert your message here]</p><p><em>For support inquiries, please include the following information. These make it easier for me to help you. Thank you!</em><p><hr><p><strong>Support Information</strong></p></p>%@ Version %@ (%@)<br>%@ (%@)<br>iOS %@ (%@)</p><hr>", comment: "Prefilled Email message text"),self.appName!, self.appVersion!, self.appBuild!, device, deviceString!, iOSVersion, lang)
+        if includeDiagnosticInformationInEmail {
+            messageString = String(format: NSLocalizedString("<p>[Please insert your message here]</p><p><em>For support inquiries, please include the following information. These make it easier for me to help you. Thank you!</em><p><hr><p><strong>Support Information</strong></p></p>%@ Version %@ (%@)<br>%@ (%@)<br>iOS %@ (%@)</p><hr>", comment: "Prefilled Email message text"),appName!, appVersion!, appBuild!, device, deviceString!, iOSVersion, lang)
         }
         
-        let subject = "\(self.appName!) \(self.appVersion!)"
+        let subject = "\(appName!) \(appVersion!)"
         
         let mailController = MFMailComposeViewController()
         mailController.mailComposeDelegate = self
         if MFMailComposeViewController.canSendMail() {
             mailController.setSubject(subject)
             mailController.setMessageBody(messageString, isHTML: true)
-            mailController.setToRecipients([self.contactEmail!])
-            self.presentViewController(mailController, animated: true, completion: nil)
+            mailController.setToRecipients([contactEmail!])
+            presentViewController(mailController, animated: true, completion: nil)
         } else {
-            let supportText = "\"\(self.appName!) Version \(self.appVersion!) (\(self.appBuild!)), \(device) (\(deviceString!)), iOS \(iOSVersion) (\(lang))\""
+            let supportText = "\"\(appName!) Version \(appVersion!) (\(appBuild!)), \(device) (\(deviceString!)), iOS \(iOSVersion) (\(lang))\""
             
-            let alert = UIAlertController(title: NSLocalizedString("Cannot send Email", comment: "Cannot send Email"), message: String(format:NSLocalizedString("Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!", comment: "Error message: no email accounts available"),self.contactEmail!, supportText, lang), preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: NSLocalizedString("Cannot send Email", comment: "Cannot send Email"), message: String(format:NSLocalizedString("Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!", comment: "Error message: no email accounts available"),contactEmail!, supportText, lang), preferredStyle: UIAlertControllerStyle.Alert)
             let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertActionStyle.Cancel, handler: { (action) -> Void in
                 alert.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             })
@@ -551,12 +551,12 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             alert.addAction(dismissAction)
             alert.addAction(copyInfoAction)
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            presentViewController(alert, animated: true, completion: nil)
         }
     }
     
     public func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+        dismissViewControllerAnimated(true, completion: { () -> Void in
             if result.rawValue == MFMailComposeResultFailed.rawValue {
                 let alert = UIAlertController(title: NSLocalizedString("Message Failed!", comment: "Sending email message failed"), message: NSLocalizedString("Your email has failed to send.", comment: "Sending email message failed body"), preferredStyle: UIAlertControllerStyle.Alert)
                 let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertActionStyle.Cancel, handler: { (action) -> Void in
@@ -575,7 +575,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     - parameter content: The text to display in the detail view
     */
     public func addAdditionalButton(title: String, content: String) {
-        self.additionalButtons.append([title:content])
+        additionalButtons.append([title:content])
     }
     
     //MARK:- Helper functions
@@ -615,7 +615,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     //MARK:- Autorotation
     
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        self.scrollViewContainerWidth?.constant = size.width
+        scrollViewContainerWidth?.constant = size.width
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
