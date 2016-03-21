@@ -126,10 +126,11 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     private var acknowledgements = [[String:String]]()
     private var metrics: [String:AnyObject]!
     private var additionalButtons = [[String:String]]()
+    private var scrollViewContainer: UIView!
 
     private var scrollViewContainerWidth: NSLayoutConstraint?
-    private let additionalButtonsTable = UITableView(frame: .zero, style: .Grouped)
-    private let acknowledgementsTableView = UITableView(frame: .zero, style: .Grouped)
+    private var additionalButtonsTableView: UITableView!
+    private var acknowledgementsTableView: UITableView!
     
     convenience public init() {
         self.init(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: nil, contactEmail: nil, contactEmailTitle: nil, websiteURL: nil, websiteURLTitle: nil, pubYear: nil)
@@ -174,7 +175,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     public override func loadView() {
         super.loadView()
-        
+
         // Set up the view
         view.backgroundColor = backgroundColor
         view.tintColor = tintColor
@@ -192,7 +193,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let mainScrollView = createMainScrollView()
         view.addSubview(mainScrollView)
         
-        let scrollViewContainer = createScrollViewContainer()
+        scrollViewContainer = createScrollViewContainer()
         mainScrollView.addSubview(scrollViewContainer)
         
         let headerView = createHeaderView()
@@ -232,11 +233,11 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             setupAndAddHeaderButton(eMailButton, title: contactEmailTitle, font: buttonFont, target: "email", headerView: headerView)
         }
 
-        createAndAddAdditionalButtonsTable(scrollViewContainer: scrollViewContainer)
+        additionalButtonsTableView = createAndAddAdditionalButtonsTableView(scrollViewContainer: scrollViewContainer)
         
         let tableHeaderLabel = createAndAddTableHeaderLabel(scrollViewContainer: scrollViewContainer)
         
-        createAndAddAcknowledgementsTableView(scrollViewContainer: scrollViewContainer)
+        acknowledgementsTableView = createAndAddAcknowledgementsTableView(scrollViewContainer: scrollViewContainer)
         
         setConstraints(mainScrollView: mainScrollView, scrollViewContainer: scrollViewContainer, headerView: headerView, appNameLabel: appNameLabel, copyrightInfo: copyrightInfo, eMailButton: eMailButton, websiteButton: websiteButton, tableHeaderLabel: tableHeaderLabel)
     }
@@ -256,7 +257,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
-        case additionalButtonsTable:
+        case additionalButtonsTableView:
             return additionalButtons.count
         case acknowledgementsTableView:
             return acknowledgements.count
@@ -288,7 +289,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             }
             
             var title = ""
-            if tableView == additionalButtonsTable {
+            if tableView == additionalButtonsTableView {
                 title = (additionalButtons[indexPath.row].keys.first)!
             } else {
                 title = (acknowledgements[indexPath.row].keys.first)!
@@ -308,13 +309,14 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         var theDict = [String: String]()
         
-        if tableView == additionalButtonsTable {
+        if tableView == additionalButtonsTableView {
             theDict = additionalButtons[indexPath.row]
         } else {
             theDict = acknowledgements[indexPath.row]
         }
         showDetailViewController(theDict)
     }
+    
     
     private func showDetailViewController(infoDictionary: [String:String]) {
         let viewController = RFAboutViewDetailViewController(infoDictionary: infoDictionary)
@@ -411,19 +413,21 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         headerView.addSubview(button)
     }
 
-    private func createAndAddAdditionalButtonsTable(scrollViewContainer scrollViewContainer: UIView) {
-        additionalButtonsTable.translatesAutoresizingMaskIntoConstraints = false
-        additionalButtonsTable.clipsToBounds = false
-        additionalButtonsTable.delegate = self
-        additionalButtonsTable.dataSource = self
-        additionalButtonsTable.scrollEnabled = false
-        additionalButtonsTable.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
-        additionalButtonsTable.backgroundColor = .clearColor()
-        additionalButtonsTable.rowHeight = UITableViewAutomaticDimension
-        additionalButtonsTable.estimatedRowHeight = sizeForPercent(12.5)
+    private func createAndAddAdditionalButtonsTableView(scrollViewContainer scrollViewContainer: UIView) -> UITableView {
+        let tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.clipsToBounds = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.scrollEnabled = false
+        tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        tableView.backgroundColor = .clearColor()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = sizeForPercent(12.5)
         if additionalButtons.count > 0 {
-            scrollViewContainer.addSubview(additionalButtonsTable)
+            scrollViewContainer.addSubview(tableView)
         }
+        return tableView
     }
 
     private func createAndAddTableHeaderLabel(scrollViewContainer scrollViewContainer: UIView) -> UILabel {
@@ -448,19 +452,21 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         return tableHeaderLabel
     }
     
-    private func createAndAddAcknowledgementsTableView(scrollViewContainer scrollViewContainer: UIView) {
-        acknowledgementsTableView.translatesAutoresizingMaskIntoConstraints = false
-        acknowledgementsTableView.clipsToBounds = false
-        acknowledgementsTableView.delegate = self
-        acknowledgementsTableView.dataSource = self
-        acknowledgementsTableView.scrollEnabled = false
-        acknowledgementsTableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
-        acknowledgementsTableView.backgroundColor = .clearColor()
-        acknowledgementsTableView.rowHeight = UITableViewAutomaticDimension
-        acknowledgementsTableView.estimatedRowHeight = sizeForPercent(12.5)
+    private func createAndAddAcknowledgementsTableView(scrollViewContainer scrollViewContainer: UIView) -> UITableView {
+        let tableView = UITableView(frame: .zero, style: .Grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.clipsToBounds = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.scrollEnabled = false
+        tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        tableView.backgroundColor = .clearColor()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = sizeForPercent(12.5)
         if showAcknowledgements {
-            scrollViewContainer.addSubview(acknowledgementsTableView)
+            scrollViewContainer.addSubview(tableView)
         }
+        return tableView
     }
 
     private func setConstraints(mainScrollView mainScrollView: UIScrollView, scrollViewContainer: UIView, headerView: UIView, appNameLabel: UILabel, copyrightInfo: UILabel, eMailButton: UIButton, websiteButton: UIButton, tableHeaderLabel: UILabel) {
@@ -482,7 +488,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             "tableViewHeight":tableViewHeight,
             "additionalButtonsTableHeight":additionalButtonsTableHeight]
         
-        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTable]
+        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTableView]
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
