@@ -39,7 +39,7 @@ let aboutNav = UINavigationController()
 
 // Initialise the RFAboutView:
 
-let aboutView = RFAboutViewController(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: "ExampleApp, Inc.", contactEmail: "mail@example.com", contactEmailTitle: "Contact us", websiteURL: NSURL(string: "http://example.com"), websiteURLTitle: "Our Website", pubYear: nil)
+let aboutView = RFAboutViewController(copyrightHolderName: "ExampleApp, Inc.", contactEmail: "mail@example.com", contactEmailTitle: "Contact us", websiteURL: NSURL(string: "http://example.com"), websiteURLTitle: "Our Website")
         
 // Set some additional options:
 
@@ -102,7 +102,7 @@ use_frameworks!
 
 René Fouquet, mail@fouquet.me
 
-Check out my blog: [bitorientied.me](http://bitoriented.me)
+Check out my blog: [bitoriented.me](http://bitoriented.me)
 
 Follow me on Twitter at @renefouquet
 
