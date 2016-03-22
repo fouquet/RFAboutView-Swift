@@ -6,8 +6,6 @@
 
 **RFAboutView** is an easy, drop-in solution to display copyright, support, privacy and other information while also automatically crediting the developers of third-party CocoaPods. RFAboutView uses AutoLayout and can be used both for iPhone and iPad apps.
 
-**Note**: This is the Swift version of RFAboutView. There is also a version [written in Objective-C available](https://github.com/fouquet/RFAboutView). Apart from minor implementation differences, both versions have identical feature sets and behave the same way.
-
 Its main features are:
 
 * Displays app name and copyright information.
@@ -88,7 +86,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-RFAboutView requires iOS 8.0 and Xcode 7 (for Swift 2.0).
+RFAboutView requires iOS 8.3 and Xcode 7 (for Swift 2.0).
 
 ## Installation
 
@@ -96,7 +94,7 @@ RFAboutView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following lines to your Podfile:
 
 ```ruby
-pod "RFAboutView-Swift", '~> 1.0.10'
+pod "RFAboutView-Swift", '~> 1.0.11'
 use_frameworks!
 ```
 
@@ -104,7 +102,7 @@ use_frameworks!
 
 René Fouquet, mail@fouquet.me
 
-Check out my blog: [fouquet.me](http://fouquet.me)
+Check out my blog: [bitorientied.me](http://bitoriented.me)
 
 Follow me on Twitter at @renefouquet
 

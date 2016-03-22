@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RFAboutView-Swift"
-  s.version          = "1.0.10"
+  s.version          = "1.0.11"
   s.summary          = "A drop-in 'about view' offering information about an app, the pods used and diagnostic debug information."
   s.description      = <<-DESC
 **RFAboutView** is an easy, drop-in solution to display copyright, support, privacy and other information while also automatically crediting the developers of third-party Cocoapods. RFAboutView uses AutoLayout and can be used both for iPhone and iPad apps.
@@ -16,13 +16,13 @@ Its main features are:
 * Clean and modern design with lots of customisation options.
                         DESC
   s.homepage         = "https://github.com/fouquet/RFAboutView-Swift"
-s.screenshots      = "https://www.fouquet.me/RFAboutView/screenshot1.png", "https://www.fouquet.me/RFAboutView/screenshot2.png", "https://www.fouquet.me/RFAboutView/screenshot3.png"
+s.screenshots      = "https://fouquet.me/RFAboutView/screenshot1.png", "https://fouquet.me/RFAboutView/screenshot2.png", "https://fouquet.me/RFAboutView/screenshot3.png"
   s.license          = 'MIT'
   s.author           = { "René Fouquet" => "mail@fouquet.me" }
   s.source           = { :git => "https://github.com/fouquet/RFAboutView-Swift.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/renefouquet'
 
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '8.3'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
