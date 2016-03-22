@@ -13,31 +13,31 @@ import SafariServices
 public class RFAboutViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,SFSafariViewControllerDelegate {
     
     /// Tint color of the RFAboutViewController. Defaults to black color.
-    public var tintColor: UIColor = .blackColor()
+    public var tintColor = UIColor.blackColor()
     
     /// Background color of the RFAboutViewController. Defaults to a light gray color.
-    public var backgroundColor: UIColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
+    public var backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
     
     /// Color of the text in the header. Defaults to black color.
-    public var headerTextColor: UIColor = .blackColor()
+    public var headerTextColor = UIColor.blackColor()
     
     /// Border color of the header. Defaults to light gray color.
-    public var headerBorderColor: UIColor = .lightGrayColor()
+    public var headerBorderColor = UIColor.lightGrayColor()
     
     ///  Background color of the header. Defaults to white color.
-    public var headerBackgroundColor: UIColor = .whiteColor()
+    public var headerBackgroundColor = UIColor.whiteColor()
     
     /// Acknowledgements header text color. Defaults to black color.
-    public var acknowledgementsHeaderColor: UIColor = .blackColor()
+    public var acknowledgementsHeaderColor = UIColor.blackColor()
     
     /// TableView background color. Defaults to white color.
-    public var tableViewBackgroundColor: UIColor = .whiteColor()
+    public var tableViewBackgroundColor = UIColor.whiteColor()
     
     /// Background Color of the selected tableview cell.
     public var tableViewSelectionColor: UIColor?
     
     /// TableView text color. Defaults to black color.
-    public var tableViewTextColor: UIColor = .blackColor()
+    public var tableViewTextColor = UIColor.blackColor()
     
     /// Background Color of the Navigation Bar.
     public var navigationViewBackgroundColor: UIColor?
@@ -49,7 +49,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     public var navigationBarTintColor: UIColor?
     
     /// Color of the Navigation Bar Title. Defaults to blackColor.
-    public var navigationBarTitleTextColor: UIColor = .blackColor()
+    public var navigationBarTitleTextColor = UIColor.blackColor()
     
     /// The background of the about header. Defaults to nil.
     public var headerBackgroundImage: UIImage?

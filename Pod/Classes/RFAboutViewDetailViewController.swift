@@ -9,11 +9,11 @@
 import UIKit
 
 public class RFAboutViewDetailViewController: UIViewController {
-    public var tintColor: UIColor = .blackColor()
-    public var backgroundColor: UIColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
+    public var tintColor = UIColor.blackColor()
+    public var backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
     public var showsScrollIndicator: Bool = true
     public var fontLicenseText: UIFont?
-    public var textColor: UIColor = .blackColor()
+    public var textColor = UIColor.blackColor()
     private var infoDict: [String:String]!
     
     public init(infoDictionary: [String:String]) {
