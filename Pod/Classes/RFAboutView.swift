@@ -627,6 +627,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         additionalButtons.append([title:content])
     }
     
+    public func addAcknowledgement(title: String, content: String) {
+        acknowledgements.append([title:content])
+    }
+    
     //MARK:- Helper functions
     
     /*!
