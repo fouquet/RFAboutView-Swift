@@ -6,7 +6,7 @@
 //  Copyright (c) 2016 René Fouquet. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIViewController {
     func sizeForPercent(percent: CGFloat) -> CGFloat {

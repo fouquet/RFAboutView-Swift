@@ -220,7 +220,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             if let theFont = fontWebsiteButton {
                 buttonFont = theFont
             }
-            setupAndAddHeaderButton(websiteButton, title: websiteURLTitle, font: buttonFont, target: "goToWebsite", headerView: headerView)
+            setupAndAddHeaderButton(websiteButton, title: websiteURLTitle, font: buttonFont, target: #selector(goToWebsite), headerView: headerView)
         }
         
         let eMailButton = UIButton(type: .Custom)
@@ -230,7 +230,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             if let theFont = fontEmailButton {
                 buttonFont = theFont
             }
-            setupAndAddHeaderButton(eMailButton, title: contactEmailTitle, font: buttonFont, target: "email", headerView: headerView)
+            setupAndAddHeaderButton(eMailButton, title: contactEmailTitle, font: buttonFont, target: #selector(email), headerView: headerView)
         }
 
         additionalButtonsTableView = createAndAddAdditionalButtonsTableView(scrollViewContainer: scrollViewContainer)
@@ -247,7 +247,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: navigationBarTitleTextColor]
         if navigationController?.viewControllers.first == self {
-            let leftItem = UIBarButtonItem(image:closeButtonImage, style: .Plain, target: self, action: Selector("close"))
+            let leftItem = UIBarButtonItem(image:closeButtonImage, style: .Plain, target: self, action: #selector(close))
             navigationItem.leftBarButtonItem = leftItem
         }
         navigationItem.title = NSLocalizedString("About", comment:"UINavigationBar Title")
