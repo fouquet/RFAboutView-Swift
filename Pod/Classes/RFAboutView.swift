@@ -606,7 +606,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     public func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         dismissViewControllerAnimated(true, completion: { () -> Void in
-            if result.rawValue == MFMailComposeResultFailed.rawValue {
+            if result == MFMailComposeResult.Failed {
                 let alert = UIAlertController(title: NSLocalizedString("Message Failed!", comment: "Sending email message failed"), message: NSLocalizedString("Your email has failed to send.", comment: "Sending email message failed body"), preferredStyle: UIAlertControllerStyle.Alert)
                 let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertActionStyle.Cancel, handler: { (action) -> Void in
                     alert.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
