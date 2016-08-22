@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RFAboutView-Swift"
-  s.version          = "1.0.13"
+  s.version          = "1.0.14"
   s.summary          = "A drop-in 'about view' offering information about an app, the pods used and diagnostic debug information."
   s.description      = <<-DESC
 **RFAboutView** is an easy, drop-in solution to display copyright, support, privacy and other information while also automatically crediting the developers of third-party Cocoapods. RFAboutView uses AutoLayout and can be used both for iPhone and iPad apps.

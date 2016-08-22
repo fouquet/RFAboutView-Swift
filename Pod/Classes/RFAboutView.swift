@@ -294,6 +294,8 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             } else {
                 title = (acknowledgements[indexPath.row].keys.first)!
             }
+            cell?.separatorInset = UIEdgeInsetsZero
+            cell?.layoutMargins = UIEdgeInsetsZero
             cell?.textLabel?.textColor = tableViewTextColor
             cell?.backgroundColor = tableViewBackgroundColor
             cell?.textLabel!.text = title
@@ -421,6 +423,12 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         tableView.dataSource = self
         tableView.scrollEnabled = false
         tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.layoutMargins = UIEdgeInsetsZero
+        if #available(iOS 9.0, *) {
+            tableView.cellLayoutMarginsFollowReadableWidth = false
+        }
+        tableView.separatorColor = tableViewTextColor
         tableView.backgroundColor = .clearColor()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = sizeForPercent(12.5)
