@@ -39,6 +39,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     /// TableView text color. Defaults to black color.
     public var tableViewTextColor = UIColor.blackColor()
     
+    /// TableView separator color. Defaults to black color with alpha 0.5
+    public var tableViewSeparatorColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    
     /// Background Color of the Navigation Bar.
     public var navigationViewBackgroundColor: UIColor?
     
@@ -127,7 +130,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     private var metrics: [String:AnyObject]!
     private var additionalButtons = [[String:String]]()
     private var scrollViewContainer: UIView!
-
+    
     private var scrollViewContainerWidth: NSLayoutConstraint?
     private var additionalButtonsTableView: UITableView!
     private var acknowledgementsTableView: UITableView!
@@ -137,27 +140,27 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     /**
-    Initializes the RFAboutViewController with the given parameters.
-    
-    - parameter appName:             The name of the app. Leave nil to use the CFBundleName.
-    - parameter appVersion:          The current version of the app. Leave nil to use CFBundleShortVersionString.
-    - parameter appBuild:            The current build of the app. Leave nil to use CFBundleVersion.
-    - parameter copyrightHolderName: The name of the person or entity who should appear as the copyright holder.
-    - parameter contactEmail:        The email address users can send inquiries to (for example a support email address). Leave nil to skip.
-    - parameter contactEmailTitle:   The text to use for the email link. Leave nil to use the email address as text.
-    - parameter websiteURL:          The URL for the website link. Leave nil to skip.
-    - parameter websiteURLTitle:     The title for the website link. Leave nil to use the website URL.
-    - parameter pubYear:             The year the app's version was published. Used in the copyright text. Leave nil to use the current year.
-    
-    - returns:  RFAboutViewController instance
-    */
+     Initializes the RFAboutViewController with the given parameters.
+     
+     - parameter appName:             The name of the app. Leave nil to use the CFBundleName.
+     - parameter appVersion:          The current version of the app. Leave nil to use CFBundleShortVersionString.
+     - parameter appBuild:            The current build of the app. Leave nil to use CFBundleVersion.
+     - parameter copyrightHolderName: The name of the person or entity who should appear as the copyright holder.
+     - parameter contactEmail:        The email address users can send inquiries to (for example a support email address). Leave nil to skip.
+     - parameter contactEmailTitle:   The text to use for the email link. Leave nil to use the email address as text.
+     - parameter websiteURL:          The URL for the website link. Leave nil to skip.
+     - parameter websiteURLTitle:     The title for the website link. Leave nil to use the website URL.
+     - parameter pubYear:             The year the app's version was published. Used in the copyright text. Leave nil to use the current year.
+     
+     - returns:  RFAboutViewController instance
+     */
     public init(appName: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String, appVersion: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String, appBuild: String? = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? String, copyrightHolderName: String? = "Developer", contactEmail: String? = nil, contactEmailTitle: String? = nil, websiteURL: NSURL? = nil, websiteURLTitle: String? = nil, pubYear: String? = String(NSCalendar.currentCalendar().components(NSCalendarUnit.Year, fromDate: NSDate()).year)) {
         super.init(nibName: nil, bundle: nil)
         
         navigationViewBackgroundColor = navigationController?.view.backgroundColor // Set from system default
         navigationBarBarTintColor = navigationController?.navigationBar.barTintColor // Set from system default
         navigationBarTintColor = tintColor // Set from system default
-
+        
         self.appName = appName ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String
         self.appVersion = appVersion ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String
         self.appBuild = appBuild ?? NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? String
@@ -175,7 +178,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     public override func loadView() {
         super.loadView()
-
+        
         // Set up the view
         view.backgroundColor = backgroundColor
         view.tintColor = tintColor
@@ -232,7 +235,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
             }
             setupAndAddHeaderButton(eMailButton, title: contactEmailTitle, font: buttonFont, target: #selector(email), headerView: headerView)
         }
-
+        
         additionalButtonsTableView = createAndAddAdditionalButtonsTableView(scrollViewContainer: scrollViewContainer)
         
         let tableHeaderLabel = createAndAddTableHeaderLabel(scrollViewContainer: scrollViewContainer)
@@ -275,8 +278,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         
         if cell==nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
+            cell?.tintColor = tableViewTextColor
+            
             cell?.textLabel?.font = UIFont.systemFontOfSize(sizeForPercent(4.688), weight: -1)
-
+            
             if let theFont = fontTableCellText {
                 cell?.textLabel?.font = theFont
             }
@@ -414,7 +419,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         headerView.addSubview(button)
     }
-
+    
     private func createAndAddAdditionalButtonsTableView(scrollViewContainer scrollViewContainer: UIView) -> UITableView {
         let tableView = UITableView(frame: .zero, style: .Grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -424,11 +429,10 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         tableView.scrollEnabled = false
         tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
         tableView.separatorInset = UIEdgeInsetsZero
-        tableView.layoutMargins = UIEdgeInsetsZero
         if #available(iOS 9.0, *) {
             tableView.cellLayoutMarginsFollowReadableWidth = false
         }
-        tableView.separatorColor = tableViewTextColor
+        tableView.separatorColor = tableViewSeparatorColor
         tableView.backgroundColor = .clearColor()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = sizeForPercent(12.5)
@@ -437,7 +441,7 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         }
         return tableView
     }
-
+    
     private func createAndAddTableHeaderLabel(scrollViewContainer scrollViewContainer: UIView) -> UILabel {
         let tableHeaderLabel = UILabel()
         tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -469,6 +473,11 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         tableView.scrollEnabled = false
         tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
         tableView.backgroundColor = .clearColor()
+        tableView.separatorInset = UIEdgeInsetsZero
+        if #available(iOS 9.0, *) {
+            tableView.cellLayoutMarginsFollowReadableWidth = false
+        }
+        tableView.separatorColor = tableViewSeparatorColor
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = sizeForPercent(12.5)
         if showAcknowledgements {
@@ -476,15 +485,15 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         }
         return tableView
     }
-
+    
     private func setConstraints(mainScrollView mainScrollView: UIScrollView, scrollViewContainer: UIView, headerView: UIView, appNameLabel: UILabel, copyrightInfo: UILabel, eMailButton: UIButton, websiteButton: UIButton, tableHeaderLabel: UILabel) {
         /*
-        A word of warning!
-        Here comes all the Autolayout mess. Seriously, it's horrible. It's ugly, hard to follow and hard to maintain.
-        But that'spretty much the only way to do it in code without external Autolayout wrappers like Masonry.
-        Do yourself a favor and don't set up constraints like that if you can help it. You will save yourself a
-        lot of headaches.
-        */
+         A word of warning!
+         Here comes all the Autolayout mess. Seriously, it's horrible. It's ugly, hard to follow and hard to maintain.
+         But that'spretty much the only way to do it in code without external Autolayout wrappers like Masonry.
+         Do yourself a favor and don't set up constraints like that if you can help it. You will save yourself a
+         lot of headaches.
+         */
         
         let currentScreenSize = UIScreen.mainScreen().bounds.size
         let padding = sizeForPercent(3.125)
@@ -492,9 +501,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         let additionalButtonsTableHeight = sizeForPercent(12.5) * CGFloat(additionalButtons.count)
         
         metrics = ["padding":padding,
-            "doublePadding":padding * 2,
-            "tableViewHeight":tableViewHeight,
-            "additionalButtonsTableHeight":additionalButtonsTableHeight]
+                   "doublePadding":padding * 2,
+                   "tableViewHeight":tableViewHeight,
+                   "additionalButtonsTableHeight":additionalButtonsTableHeight]
         
         let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTableView]
         
@@ -626,11 +635,11 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     /**
-    Adds an additional button (as a TableView cell) below the header. Use it to supply further information, like TOS, Privacy Policy etc.
-    
-    - parameter title:   The title of the button
-    - parameter content: The text to display in the detail view
-    */
+     Adds an additional button (as a TableView cell) below the header. Use it to supply further information, like TOS, Privacy Policy etc.
+     
+     - parameter title:   The title of the button
+     - parameter content: The text to display in the detail view
+     */
     public func addAdditionalButton(title: String, content: String) {
         additionalButtons.append([title:content])
     }
@@ -642,9 +651,9 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     //MARK:- Helper functions
     
     /*!
-    *  Gets the raw platform id (e.g. iPhone7,1)
-    *  Mad props to http://stackoverflow.com/questions/25467082/using-sysctlbyname-from-swift
-    */
+     *  Gets the raw platform id (e.g. iPhone7,1)
+     *  Mad props to http://stackoverflow.com/questions/25467082/using-sysctlbyname-from-swift
+     */
     
     private func platformModelString() -> String? {
         if let key = "hw.machine".cStringUsingEncoding(NSUTF8StringEncoding) {
