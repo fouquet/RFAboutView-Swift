@@ -1,5 +1,7 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '6.0'
 
-pod "RFAboutView-Swift", :path => "../"
-use_frameworks!
+target "RFAboutView" do
+	pod "RFAboutView-Swift", :path => "../"
+	use_frameworks!
+end

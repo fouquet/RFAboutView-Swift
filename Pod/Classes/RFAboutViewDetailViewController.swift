@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class RFAboutViewDetailViewController: UIViewController {
-    public var tintColor = UIColor.blackColor()
-    public var backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
-    public var showsScrollIndicator: Bool = true
-    public var fontLicenseText: UIFont?
-    public var textColor = UIColor.blackColor()
-    private var infoDict: [String:String]!
+open class RFAboutViewDetailViewController: UIViewController {
+    open var tintColor = UIColor.black
+    open var backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1)
+    open var showsScrollIndicator: Bool = true
+    open var fontLicenseText: UIFont?
+    open var textColor = UIColor.black
+    fileprivate var infoDict: [String:String]!
     
     public init(infoDictionary: [String:String]) {
         super.init(nibName: nil, bundle: nil)
@@ -25,29 +25,29 @@ public class RFAboutViewDetailViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    public override func loadView() {
+    open override func loadView() {
         super.loadView()
         
         view.backgroundColor = backgroundColor
         view.tintColor = tintColor
         
         navigationItem.title = infoDict.keys.first
-        navigationController?.toolbarHidden = true
+        navigationController?.isToolbarHidden = true
         
         let contentTextView = UITextView()
         contentTextView.frame = view.bounds
-        contentTextView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
+        contentTextView.autoresizingMask = [UIViewAutoresizing.flexibleHeight, UIViewAutoresizing.flexibleWidth]
         contentTextView.textContainerInset = UIEdgeInsetsMake(sizeForPercent(3.125), sizeForPercent(3.125), sizeForPercent(3.125), sizeForPercent(3.125))
-        contentTextView.userInteractionEnabled = true
-        contentTextView.selectable = true
-        contentTextView.editable = false
-        contentTextView.scrollEnabled = true
+        contentTextView.isUserInteractionEnabled = true
+        contentTextView.isSelectable = true
+        contentTextView.isEditable = false
+        contentTextView.isScrollEnabled = true
         contentTextView.showsHorizontalScrollIndicator = false
         contentTextView.showsVerticalScrollIndicator = showsScrollIndicator
-        contentTextView.backgroundColor = .clearColor()
-        contentTextView.spellCheckingType = .No
+        contentTextView.backgroundColor = UIColor.clear
+        contentTextView.spellCheckingType = .no
         contentTextView.textColor = textColor
-        contentTextView.font = UIFont.systemFontOfSize(sizeForPercent(4.063), weight: -1)
+        contentTextView.font = UIFont.systemFont(ofSize: sizeForPercent(4.063), weight: -1)
         
         if let theFont = fontLicenseText {
             contentTextView.font = theFont

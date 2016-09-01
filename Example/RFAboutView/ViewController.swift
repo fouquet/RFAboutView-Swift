@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func showAbout(sender: AnyObject) {
+    @IBAction func showAbout() {
         // First create a UINavigationController (or use your existing one).
         // The RFAboutView needs to be wrapped in a UINavigationController.
         
@@ -30,13 +30,12 @@ class ViewController: UIViewController {
         
         // Initialise the RFAboutView:
         
-        let aboutView = RFAboutViewController(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: "ExampleApp, Inc.", contactEmail: "mail@example.com", contactEmailTitle: "Contact us", websiteURL: NSURL(string: "http://example.com"), websiteURLTitle: "Our Website", pubYear: nil)
-        
+        let aboutView = RFAboutViewController(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: "ExampleApp, Inc.", contactEmail: "mail@example.com", contactEmailTitle: "Contact us", websiteURL: URL(string: "http://example.com"), websiteURLTitle: "Our Website", pubYear: nil)
         // Set some additional options:
         
-        aboutView.headerBackgroundColor = .blackColor()
-        aboutView.headerTextColor = .whiteColor()
-        aboutView.blurStyle = .Dark
+        aboutView.headerBackgroundColor = UIColor.black
+        aboutView.headerTextColor = UIColor.white
+        aboutView.blurStyle = .dark
         aboutView.headerBackgroundImage = UIImage(named: "about_header_bg.jpg")
         
         // Add an additional button:
@@ -46,7 +45,7 @@ class ViewController: UIViewController {
         aboutNav.setViewControllers([aboutView], animated: false)
         
         // Present the navigation controller:
-        self.presentViewController(aboutNav, animated: true, completion: nil)
+        self.present(aboutNav, animated: true, completion: nil)
     }
 }
 
