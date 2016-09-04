@@ -10,6 +10,11 @@ import UIKit
 import MessageUI
 import SafariServices
 
+public enum CloseButtonSide {
+    case leftSide
+    case rightSide
+}
+
 public class RFAboutViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,SFSafariViewControllerDelegate {
     
     /// Tint color of the RFAboutViewController. Defaults to black color.
@@ -59,6 +64,15 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
     
     /// The image for the button to dismiss the RFAboutViewController. Defaults to image of "X".
     public var closeButtonImage = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
+    
+    /// Determines if the close button should be an image, or text.
+    public var closeButtonAsImage = true
+    
+    /// The text of the close button, if not an image
+    public var closeButtonText = NSLocalizedString("Close", comment:"Close button text")
+    
+    /// The position of the close button (left or right side)
+    public var closeButtonSide: CloseButtonSide = .leftSide
     
     /// Determines if the header background image should be blurred. Defaults to true.
     public var blurHeaderBackground = true
@@ -249,10 +263,22 @@ public class RFAboutViewController: UIViewController,UITableViewDataSource,UITab
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: navigationBarTitleTextColor]
-        if navigationController?.viewControllers.first == self {
-            let leftItem = UIBarButtonItem(image:closeButtonImage, style: .Plain, target: self, action: #selector(close))
-            navigationItem.leftBarButtonItem = leftItem
+    if navigationController?.viewControllers.first == self {
+            var closeItem: UIBarButtonItem!
+            
+            if closeButtonAsImage {
+                closeItem = UIBarButtonItem(image:closeButtonImage, style: .Plain, target: self, action: #selector(close))
+            } else {
+                closeItem = UIBarButtonItem(title: closeButtonText, style: .Plain, target: self, action: #selector(close))
+            }
+            
+            if closeButtonSide == .leftSide {
+                navigationItem.leftBarButtonItem = closeItem
+            } else {
+                navigationItem.rightBarButtonItem = closeItem
+            }
         }
+
         navigationItem.title = NSLocalizedString("About", comment:"UINavigationBar Title")
     }
     
