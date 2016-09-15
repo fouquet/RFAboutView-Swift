@@ -455,9 +455,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         tableView.isScrollEnabled = false
         tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
         tableView.separatorInset = UIEdgeInsets.zero
-        if #available(iOS 9.0, *) {
-            tableView.cellLayoutMarginsFollowReadableWidth = false
-        }
+        tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorColor = tableViewSeparatorColor
         tableView.backgroundColor = UIColor.clear
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -500,9 +498,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
         tableView.backgroundColor = UIColor.clear
         tableView.separatorInset = UIEdgeInsets.zero
-        if #available(iOS 9.0, *) {
-            tableView.cellLayoutMarginsFollowReadableWidth = false
-        }
+        tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorColor = tableViewSeparatorColor
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = sizeForPercent(12.5)
@@ -593,16 +589,11 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     }
     
     open func goToWebsite() {
-        if #available(iOS 9.0, *) {
-            let webVC = SFSafariViewController(url: websiteURL!)
-            webVC.delegate = self
-            present(webVC, animated: true, completion: nil)
-        } else {
-            UIApplication.shared.openURL(websiteURL!)
-        }
+        let webVC = SFSafariViewController(url: websiteURL!)
+        webVC.delegate = self
+        present(webVC, animated: true, completion: nil)
     }
     
-    @available(iOS 9.0, *)
     open func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
