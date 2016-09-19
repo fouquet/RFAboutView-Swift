@@ -68,7 +68,7 @@ RFAboutView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following lines to your Podfile:
 
 ```ruby
-pod "RFAboutView-Swift", '~> 2.0.0'
+pod "RFAboutView-Swift", '~> 2.0.1'
 use_frameworks!
 ```
 

@@ -14,7 +14,7 @@ open class RFAboutViewDetailViewController: UIViewController {
     open var showsScrollIndicator: Bool = true
     open var fontLicenseText: UIFont?
     open var textColor = UIColor.black
-    fileprivate var infoDict: [String:String]!
+    private var infoDict: [String:String]!
     
     public init(infoDictionary: [String:String]) {
         super.init(nibName: nil, bundle: nil)

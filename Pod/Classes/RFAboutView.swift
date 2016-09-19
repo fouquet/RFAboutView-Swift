@@ -140,14 +140,14 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     /// Font used for the license text in the pod detail view
     open var fontLicenseText: UIFont?
     
-    fileprivate var acknowledgements = [[String:String]]()
-    fileprivate var metrics: [String:CGFloat]!
-    fileprivate var additionalButtons = [[String:String]]()
-    fileprivate var scrollViewContainer: UIView!
+    private var acknowledgements = [[String:String]]()
+    private var metrics: [String:CGFloat]!
+    private var additionalButtons = [[String:String]]()
+    private var scrollViewContainer: UIView!
     
-    fileprivate var scrollViewContainerWidth: NSLayoutConstraint?
-    fileprivate var additionalButtonsTableView: UITableView!
-    fileprivate var acknowledgementsTableView: UITableView!
+    private var scrollViewContainerWidth: NSLayoutConstraint?
+    private var additionalButtonsTableView: UITableView!
+    private var acknowledgementsTableView: UITableView!
     
     convenience public init() {
         self.init(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: nil, contactEmail: nil, contactEmailTitle: nil, websiteURL: nil, websiteURLTitle: nil, pubYear: nil)
@@ -351,7 +351,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     }
     
     
-    fileprivate func showDetailViewController(_ infoDictionary: [String:String]) {
+    private func showDetailViewController(_ infoDictionary: [String:String]) {
         let viewController = RFAboutViewDetailViewController(infoDictionary: infoDictionary)
         viewController.showsScrollIndicator = showsScrollIndicator
         viewController.backgroundColor = backgroundColor
@@ -362,7 +362,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    fileprivate func createMainScrollView() -> UIScrollView {
+    private func createMainScrollView() -> UIScrollView {
         let mainScrollView = UIScrollView()
         mainScrollView.translatesAutoresizingMaskIntoConstraints = false
         mainScrollView.backgroundColor = UIColor.clear
@@ -371,14 +371,14 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return mainScrollView
     }
     
-    fileprivate func createScrollViewContainer() -> UIView {
+    private func createScrollViewContainer() -> UIView {
         let scrollViewContainer = UIView()
         scrollViewContainer.translatesAutoresizingMaskIntoConstraints = false
         scrollViewContainer.backgroundColor = UIColor.clear
         return scrollViewContainer
     }
     
-    fileprivate func createHeaderView() -> UIView {
+    private func createHeaderView() -> UIView {
         let headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.backgroundColor = headerBackgroundColor
@@ -388,7 +388,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return headerView
     }
     
-    fileprivate func createHeaderBackground(headerView: UIView) -> UIImageView {
+    private func createHeaderBackground(headerView: UIView) -> UIImageView {
         let headerBackground = UIImageView()
         headerBackground.translatesAutoresizingMaskIntoConstraints = true
         headerBackground.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -398,7 +398,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return headerBackground
     }
     
-    fileprivate func createAndAddNameLabel(headerView: UIView) -> UILabel {
+    private func createAndAddNameLabel(headerView: UIView) -> UILabel {
         let appNameLabel = UILabel()
         appNameLabel.translatesAutoresizingMaskIntoConstraints = false
         appNameLabel.font = UIFont.systemFont(ofSize: sizeForPercent(5.625), weight: -0.5)
@@ -418,7 +418,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return appNameLabel
     }
     
-    fileprivate func createAndAddCopyrightLabel(headerView: UIView) -> UILabel {
+    private func createAndAddCopyrightLabel(headerView: UIView) -> UILabel {
         let copyrightInfo = UILabel()
         copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
         copyrightInfo.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: -1)
@@ -437,7 +437,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return copyrightInfo
     }
     
-    fileprivate func setupAndAddHeaderButton(_ button: UIButton, title: String?, font: UIFont, target: Selector, headerView: UIView) {
+    private func setupAndAddHeaderButton(_ button: UIButton, title: String?, font: UIFont, target: Selector, headerView: UIView) {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(headerTextColor, for: UIControlState())
         button.setTitle(title, for: UIControlState())
@@ -446,7 +446,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         headerView.addSubview(button)
     }
     
-    fileprivate func createAndAddAdditionalButtonsTableView(scrollViewContainer: UIView) -> UITableView {
+    private func createAndAddAdditionalButtonsTableView(scrollViewContainer: UIView) -> UITableView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.clipsToBounds = false
@@ -466,7 +466,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return tableView
     }
     
-    fileprivate func createAndAddTableHeaderLabel(scrollViewContainer: UIView) -> UILabel {
+    private func createAndAddTableHeaderLabel(scrollViewContainer: UIView) -> UILabel {
         let tableHeaderLabel = UILabel()
         tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         tableHeaderLabel.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: -1)
@@ -488,7 +488,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return tableHeaderLabel
     }
     
-    fileprivate func createAndAddAcknowledgementsTableView(scrollViewContainer: UIView) -> UITableView {
+    private func createAndAddAcknowledgementsTableView(scrollViewContainer: UIView) -> UITableView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.clipsToBounds = false
@@ -508,7 +508,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return tableView
     }
     
-    fileprivate func setConstraints(mainScrollView: UIScrollView, scrollViewContainer: UIView, headerView: UIView, appNameLabel: UILabel, copyrightInfo: UILabel, eMailButton: UIButton, websiteButton: UIButton, tableHeaderLabel: UILabel) {
+    private func setConstraints(mainScrollView: UIScrollView, scrollViewContainer: UIView, headerView: UIView, appNameLabel: UILabel, copyrightInfo: UILabel, eMailButton: UIButton, websiteButton: UIButton, tableHeaderLabel: UILabel) {
         /*
          A word of warning!
          Here comes all the Autolayout mess. Seriously, it's horrible. It's ugly, hard to follow and hard to maintain.
@@ -599,7 +599,6 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     }
     
     open func email() {
-        
         let iOSVersion = UIDevice.current.systemVersion as String
         let device = UIDevice.current.model as String
         let deviceString = platformModelString()
@@ -672,7 +671,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
      *  Mad props to http://stackoverflow.com/questions/25467082/using-sysctlbyname-from-swift
      */
     
-    fileprivate func platformModelString() -> String? {
+    private func platformModelString() -> String? {
         if let key = "hw.machine".cString(using: String.Encoding.utf8) {
             var size: Int = 0
             sysctlbyname(key, nil, &size, nil, 0)
@@ -683,7 +682,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         return nil
     }
     
-    fileprivate func reformatAcknowledgementsDictionary(_ originalDict: NSDictionary) -> [[String: String]] {
+    private func reformatAcknowledgementsDictionary(_ originalDict: NSDictionary) -> [[String: String]] {
         var outputArray = [[String:String]]()
 
         if let tmp = originalDict.object(forKey: "PreferenceSpecifiers") as? NSMutableArray {
