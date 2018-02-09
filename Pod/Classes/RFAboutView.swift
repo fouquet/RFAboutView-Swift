@@ -223,7 +223,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         visualEffectView.translatesAutoresizingMaskIntoConstraints = true
         visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        if headerBackgroundImage != nil {
+        if headerBackgroundImage != nil && blurHeaderBackground {
             headerBackground.addSubview(visualEffectView)
         }
         
