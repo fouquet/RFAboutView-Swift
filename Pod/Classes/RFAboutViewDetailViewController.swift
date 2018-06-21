@@ -47,7 +47,7 @@ open class RFAboutViewDetailViewController: UIViewController {
         contentTextView.backgroundColor = UIColor.clear
         contentTextView.spellCheckingType = .no
         contentTextView.textColor = textColor
-        contentTextView.font = UIFont.systemFont(ofSize: sizeForPercent(4.063), weight: -1)
+        contentTextView.font = UIFont.systemFont(ofSize: sizeForPercent(4.063), weight: UIFont.Weight(rawValue: -1))
         
         if let theFont = fontLicenseText {
             contentTextView.font = theFont
