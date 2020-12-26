@@ -262,7 +262,8 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: navigationBarTitleTextColor])
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: navigationBarTitleTextColor]
+
         if navigationController?.viewControllers.first == self {
             var closeItem: UIBarButtonItem!
             
@@ -302,7 +303,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
-        if cell==nil {
+        if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
             cell?.tintColor = tableViewTextColor
             
@@ -528,7 +529,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
                    "additionalButtonsTableHeight":additionalButtonsTableHeight]
         
         let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTableView]
-        
+
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
         
@@ -709,10 +710,4 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
             self.view.layoutIfNeeded()
         })
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }
