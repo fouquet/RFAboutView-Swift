@@ -1,5 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RFAboutView-Swift"
+  s.swift_version    = '5.3'
   s.version          = "3.0.0"
   s.summary          = "A drop-in 'about view' offering information about an app, the pods used and diagnostic debug information."
   s.description      = <<-DESC
@@ -16,7 +17,7 @@ Its main features are:
 * Clean and modern design with lots of customisation options.
                         DESC
   s.homepage         = "https://github.com/fouquet/RFAboutView-Swift"
-s.screenshots      = "https://fouquet.me/RFAboutView/screenshot1.png", "https://fouquet.me/RFAboutView/screenshot2.png", "https://fouquet.me/RFAboutView/screenshot3.png"
+s.screenshots      = "https://github.com/fouquet/RFAboutView-Swift/blob/master/Screenshots/screenshot1.png", "https://github.com/fouquet/RFAboutView-Swift/blob/master/Screenshots/screenshot2.png"
   s.license          = 'MIT'
   s.author           = { "René Fouquet" => "mail@fouquet.me" }
   s.source           = { :git => "https://github.com/fouquet/RFAboutView-Swift.git", :tag => s.version.to_s }
