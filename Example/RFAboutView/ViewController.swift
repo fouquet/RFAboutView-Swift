@@ -44,7 +44,7 @@ class ViewController: UIViewController {
     func createAboutViewController() -> UIViewController {
         // Initialise the RFAboutView:
 
-        let aboutViewController = RFAboutViewController(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: "ExampleApp, Inc.", contactEmail: "mail@example.com", contactEmailTitle: "Contact us", websiteURL: URL(string: "http://example.com"), websiteURLTitle: "Our Website", pubYear: nil)
+        let aboutViewController = RFAboutViewController(copyrightHolderName: "ExampleApp, Inc.", contactEmail: "mail@example.com", contactEmailTitle: "Contact us", websiteURL: URL(string: "http://example.com"), websiteURLTitle: "Our Website", pubYear: nil)
 
         // Set some additional options:
 

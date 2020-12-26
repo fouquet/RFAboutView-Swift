@@ -63,8 +63,15 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
     open var headerBackgroundImage: UIImage?
     
     /// The image for the button to dismiss the RFAboutViewController. Defaults to image of "X".
-    open var closeButtonImage = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
-    
+    #if SWIFT_PACKAGE
+    // Swift Packages include a static extension "module" on Bundle for Resources:
+    open var closeButtonImage: UIImage? = UIImage(contentsOfFile: Bundle.module.url(forResource: "RFAboutViewCloseX", withExtension: "png")?.path ?? "")
+    #else
+    // On CocoaPods (and Carthage built frameworks) the Bundle extension is missing, and the path
+    // to the resource is different:
+    open var closeButtonImage: UIImage? = UIImage(named: "Frameworks/RFAboutView_Swift.framework/RFAboutView_Swift.bundle/RFAboutViewCloseX")
+    #endif
+
     /// Determines if the close button should be an image, or text.
     open var closeButtonAsImage = true
     
@@ -148,6 +155,8 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
     private var scrollViewContainerWidth: NSLayoutConstraint?
     private var additionalButtonsTableView: UITableView!
     private var acknowledgementsTableView: UITableView!
+
+    private var headerStackView: UIStackView!
     
     convenience public init() {
         self.init(appName: nil, appVersion: nil, appBuild: nil, copyrightHolderName: nil, contactEmail: nil, contactEmailTitle: nil, websiteURL: nil, websiteURLTitle: nil, pubYear: nil)
@@ -222,13 +231,16 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
         visualEffectView.translatesAutoresizingMaskIntoConstraints = true
         visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        let stackView = createHeaderStackView()
+        headerView.addSubview(stackView)
         
         if headerBackgroundImage != nil && blurHeaderBackground {
             headerBackground.addSubview(visualEffectView)
         }
         
-        let appNameLabel = createAndAddNameLabel(headerView: headerView)
-        let copyrightInfo = createAndAddCopyrightLabel(headerView: headerView)
+        createAndAddNameLabel(to: stackView)
+        createAndAddCopyrightLabel(to: stackView)
         
         let websiteButton = UIButton(type: .custom)
         
@@ -237,7 +249,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
             if let theFont = fontWebsiteButton {
                 buttonFont = theFont
             }
-            setupAndAddHeaderButton(websiteButton, title: websiteURLTitle, font: buttonFont, target: #selector(goToWebsite), headerView: headerView)
+            setupAndAddHeaderButton(to: stackView, button: websiteButton, title: websiteURLTitle, font: buttonFont, target: #selector(goToWebsite))
         }
         
         let eMailButton = UIButton(type: .custom)
@@ -247,7 +259,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
             if let theFont = fontEmailButton {
                 buttonFont = theFont
             }
-            setupAndAddHeaderButton(eMailButton, title: contactEmailTitle, font: buttonFont, target: #selector(email), headerView: headerView)
+            setupAndAddHeaderButton(to: stackView, button: eMailButton, title: contactEmailTitle, font: buttonFont, target: #selector(email))
         }
         
         additionalButtonsTableView = createAndAddAdditionalButtonsTableView(scrollViewContainer: scrollViewContainer)
@@ -256,7 +268,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         
         acknowledgementsTableView = createAndAddAcknowledgementsTableView(scrollViewContainer: scrollViewContainer)
         
-        setConstraints(mainScrollView: mainScrollView, scrollViewContainer: scrollViewContainer, headerView: headerView, appNameLabel: appNameLabel, copyrightInfo: copyrightInfo, eMailButton: eMailButton, websiteButton: websiteButton, tableHeaderLabel: tableHeaderLabel)
+        setConstraints(mainScrollView: mainScrollView, stackView: stackView, scrollViewContainer: scrollViewContainer, headerView: headerView, tableHeaderLabel: tableHeaderLabel)
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -350,8 +362,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         }
         showDetailViewController(theDict)
     }
-    
-    
+
     private func showDetailViewController(_ infoDictionary: [String:String]) {
         let viewController = RFAboutViewDetailViewController(infoDictionary: infoDictionary)
         viewController.showsScrollIndicator = showsScrollIndicator
@@ -388,6 +399,14 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         headerView.clipsToBounds = true
         return headerView
     }
+
+    private func createHeaderStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = sizeForPercent(3.125)
+        return stackView
+    }
     
     private func createHeaderBackground(headerView: UIView) -> UIImageView {
         let headerBackground = UIImageView()
@@ -399,7 +418,7 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         return headerBackground
     }
     
-    private func createAndAddNameLabel(headerView: UIView) -> UILabel {
+    private func createAndAddNameLabel(to stackView: UIStackView) {
         let appNameLabel = UILabel()
         appNameLabel.translatesAutoresizingMaskIntoConstraints = false
         appNameLabel.font = UIFont.systemFont(ofSize: sizeForPercent(5.625), weight: UIFont.Weight(rawValue: -0.5))
@@ -413,13 +432,12 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         appNameLabel.textAlignment = .center
         appNameLabel.text = appName
         appNameLabel.textColor = headerTextColor
-        headerView.addSubview(appNameLabel)
+        stackView.addArrangedSubview(appNameLabel)
         appNameLabel.sizeToFit()
         appNameLabel.layoutIfNeeded()
-        return appNameLabel
     }
     
-    private func createAndAddCopyrightLabel(headerView: UIView) -> UILabel {
+    private func createAndAddCopyrightLabel(to stackView: UIStackView) {
         let copyrightInfo = UILabel()
         copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
         copyrightInfo.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: UIFont.Weight(rawValue: -1))
@@ -432,19 +450,18 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         copyrightInfo.textAlignment = .center
         copyrightInfo.text = "Version \(appVersion!) (\(appBuild!))\n © \(pubYear!) \(copyrightHolderName!)"
         copyrightInfo.textColor = headerTextColor
-        headerView.addSubview(copyrightInfo)
+        stackView.addArrangedSubview(copyrightInfo)
         copyrightInfo.sizeToFit()
         copyrightInfo.layoutIfNeeded()
-        return copyrightInfo
     }
     
-    private func setupAndAddHeaderButton(_ button: UIButton, title: String?, font: UIFont, target: Selector, headerView: UIView) {
+    private func setupAndAddHeaderButton(to stackView: UIStackView, button: UIButton, title: String?, font: UIFont, target: Selector) {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(headerTextColor, for: UIControl.State())
         button.setTitle(title, for: UIControl.State())
         button.titleLabel?.font = font
         button.addTarget(self, action: target, for: .touchUpInside)
-        headerView.addSubview(button)
+        stackView.addArrangedSubview(button)
     }
     
     private func createAndAddAdditionalButtonsTableView(scrollViewContainer: UIView) -> UITableView {
@@ -509,77 +526,62 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
         return tableView
     }
     
-    private func setConstraints(mainScrollView: UIScrollView, scrollViewContainer: UIView, headerView: UIView, appNameLabel: UILabel, copyrightInfo: UILabel, eMailButton: UIButton, websiteButton: UIButton, tableHeaderLabel: UILabel) {
-        /*
-         A word of warning!
-         Here comes all the Autolayout mess. Seriously, it's horrible. It's ugly, hard to follow and hard to maintain.
-         But that'spretty much the only way to do it in code without external Autolayout wrappers like Masonry.
-         Do yourself a favor and don't set up constraints like that if you can help it. You will save yourself a
-         lot of headaches.
-         */
-        
-        let currentScreenSize = UIScreen.main.bounds.size
+    private func setConstraints(mainScrollView: UIScrollView, stackView: UIStackView, scrollViewContainer: UIView, headerView: UIView, tableHeaderLabel: UILabel) {
+
         let padding = sizeForPercent(3.125)
         let tableViewHeight = sizeForPercent(12.5) * CGFloat(acknowledgements.count)
         let additionalButtonsTableHeight = sizeForPercent(12.5) * CGFloat(additionalButtons.count)
-        
-        metrics = ["padding":padding,
-                   "doublePadding":padding * 2,
-                   "tableViewHeight":tableViewHeight,
-                   "additionalButtonsTableHeight":additionalButtonsTableHeight]
-        
-        let viewsDictionary = ["mainScrollView":mainScrollView,"scrollViewContainer":scrollViewContainer,"headerView":headerView,"appName":appNameLabel,"copyrightInfo":copyrightInfo,"eMailButton":eMailButton,"websiteButton":websiteButton,"tableHeaderLabel":tableHeaderLabel,"acknowledgementsTableView":acknowledgementsTableView,"additionalButtonsTable":additionalButtonsTableView]
 
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[mainScrollView]|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        // We need to save the constraint to manually change the constant when the screen rotates:
-        
-        scrollViewContainerWidth = NSLayoutConstraint(item: scrollViewContainer, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: currentScreenSize.width)
-        
-        mainScrollView.addConstraint(scrollViewContainerWidth!)
-        
-        mainScrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollViewContainer]|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        scrollViewContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[headerView]|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        var firstFormatString = ""
-        
+        mainScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        mainScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        mainScrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        mainScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        scrollViewContainer.topAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.topAnchor).isActive = true
+        scrollViewContainer.bottomAnchor.constraint(equalTo: mainScrollView.contentLayoutGuide.bottomAnchor).isActive = true
+        scrollViewContainer.leadingAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.leadingAnchor).isActive = true
+        scrollViewContainer.trailingAnchor.constraint(equalTo: mainScrollView.frameLayoutGuide.trailingAnchor).isActive = true
+
+        scrollViewContainer.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
+        scrollViewContainer.trailingAnchor.constraint(equalTo: headerView.trailingAnchor).isActive = true
+        scrollViewContainer.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
+
+        stackView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: padding * 2).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -padding * 2).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: padding * 2).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -padding * 2).isActive = true
+
         if additionalButtons.count > 0 {
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[additionalButtonsTable]|", options: [], metrics: metrics, views: viewsDictionary))
-            firstFormatString = firstFormatString+"-doublePadding-[additionalButtonsTable(==additionalButtonsTableHeight)]"
+            additionalButtonsTableView.leadingAnchor.constraint(equalTo: scrollViewContainer.leadingAnchor).isActive = true
+            additionalButtonsTableView.trailingAnchor.constraint(equalTo: scrollViewContainer.trailingAnchor).isActive = true
+
+            additionalButtonsTableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding * 2).isActive = true
+
+            additionalButtonsTableView.heightAnchor.constraint(equalToConstant: additionalButtonsTableHeight).isActive = true
         }
         
         if showAcknowledgements {
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-padding-[tableHeaderLabel]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-            scrollViewContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[acknowledgementsTableView]|", options: [], metrics: metrics, views: viewsDictionary))
-            firstFormatString = firstFormatString+"-doublePadding-[tableHeaderLabel]-padding-[acknowledgementsTableView(==tableViewHeight)]-doublePadding-"
-        }
-        
-        scrollViewContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format: "V:|[headerView]%@|", firstFormatString), options: [], metrics: metrics, views: viewsDictionary))
-        
-        headerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-padding-[appName]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        headerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-padding-[copyrightInfo]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-        
-        var secondFormatString = ""
-        
-        if websiteURL != nil {
-            headerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-padding-[websiteButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-            secondFormatString = secondFormatString+"-padding-[websiteButton]"
-        }
-        
-        if contactEmail != nil {
-            headerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-padding-[eMailButton]-padding-|", options: [], metrics: metrics, views: viewsDictionary))
-            
-            if websiteURL != nil {
-                secondFormatString = secondFormatString+"-0-[eMailButton]"
+            tableHeaderLabel.leadingAnchor.constraint(equalTo: scrollViewContainer.leadingAnchor, constant: padding).isActive = true
+            tableHeaderLabel.trailingAnchor.constraint(equalTo: scrollViewContainer.trailingAnchor, constant: padding).isActive = true
+            acknowledgementsTableView.leadingAnchor.constraint(equalTo: scrollViewContainer.leadingAnchor).isActive = true
+            acknowledgementsTableView.trailingAnchor.constraint(equalTo: scrollViewContainer.trailingAnchor).isActive = true
+            acknowledgementsTableView.heightAnchor.constraint(equalToConstant: tableViewHeight).isActive = true
+            acknowledgementsTableView.topAnchor.constraint(equalTo: tableHeaderLabel.bottomAnchor, constant: padding).isActive = true
+
+            if additionalButtons.count > 0 {
+                tableHeaderLabel.topAnchor.constraint(equalTo: additionalButtonsTableView.bottomAnchor, constant: padding * 2).isActive = true
             } else {
-                secondFormatString = secondFormatString+"-padding-[eMailButton]"
+                tableHeaderLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding * 2).isActive = true
             }
         }
-        
-        headerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-doublePadding-[appName]-padding-[copyrightInfo]%@-doublePadding-|",secondFormatString), options: [], metrics: metrics, views: viewsDictionary))
+
+        if additionalButtons.count == 0 && !showAcknowledgements {
+            scrollViewContainer.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding * 2).isActive = true
+        } else if showAcknowledgements {
+            scrollViewContainer.bottomAnchor.constraint(equalTo: acknowledgementsTableView.bottomAnchor, constant: padding * 2).isActive = true
+        } else {
+            scrollViewContainer.bottomAnchor.constraint(equalTo: additionalButtonsTableView.bottomAnchor, constant: padding * 2).isActive = true
+        }
     }
     
     
@@ -700,14 +702,5 @@ open class RFAboutViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         return outputArray
-    }
-    
-    //MARK:- Autorotation
-    
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        scrollViewContainerWidth?.constant = size.width
-        UIView.animate(withDuration: 0.2, animations: { () -> Void in
-            self.view.layoutIfNeeded()
-        })
     }
 }
