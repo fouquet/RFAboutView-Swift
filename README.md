@@ -19,8 +19,8 @@ Its main features are:
 
 ## Screenshots
 
-<img src = "https://fouquet.me/RFAboutView/screenshot1.png" alt="Screenshot 1" width="300" height="534" />
-<img src = "https://fouquet.me/RFAboutView/screenshot2.png" alt="Screenshot 2" width="300" height="534" />
+<img src = "https://github.com/fouquet/RFAboutView-Swift/blob/master/Screenshots/screenshot1.png" alt="Screenshot 1" width="300" height="534" />
+<img src = "https://github.com/fouquet/RFAboutView-Swift/blob/master/Screenshots/screenshot2.png" alt="Screenshot 2" width="300" height="534" />
 
 ## Usage
 
@@ -62,13 +62,21 @@ aboutNav.setViewControllers([aboutView], animated: false)
 self.presentViewController(aboutNav, animated: true, completion: nil)
 ```
 
+## Installation via Swift Package Manager
+
+Add the following to your `Package.swift` (or add it via Xcode's GUI):
+
+```
+.package(url: "https://github.com/fouquet/RFAboutView-Swift", from: "3.0.0")
+```
+
 ## Installation via Cocoapods
 
 RFAboutView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following lines to your Podfile:
 
 ```ruby
-pod "RFAboutView-Swift", '~> 2.0.1'
+pod "RFAboutView-Swift", '~> 3.0.0'
 use_frameworks!
 ```
 
@@ -95,13 +103,13 @@ end
 Note that the directory names can differ based on the setup of your project and whether or not you are using different targets. Check with your local project directory and change the snippet accordingly. Also don't forget to add the `Acknowledgements.plist` file to your Xcode project.
 
 
-## Localisation and changing the default text
+## Localization and changing the default text
 
-If you want to localise RFAboutView for your app or if you would like to change the default texts, you can use the [RFAboutView.strings](https://github.com/fouquet/RFAboutView/blob/master/Example/RFAboutView.strings) file in the example app as a template.
+If you want to localize RFAboutView for your app or if you would like to change the default texts, you can use the [RFAboutView.strings](https://github.com/fouquet/RFAboutView/blob/master/Example/RFAboutView.strings) file in the example app as a template.
 
-## Customisation options
+## Customization options
 
-RFAboutView contains many customisation options. See the file ``RFAboutView.swift`` for a full documentation.
+RFAboutView contains many customization options. See the file ``RFAboutView.swift`` for a full documentation.
 
 ## Example Project
 
@@ -109,7 +117,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-RFAboutView requires iOS 9.0 and Xcode 8.0 (for Swift 3).
+RFAboutView requires iOS 12.0 and Xcode 12 (for Swift 5.3).
 
 ## Author
 
