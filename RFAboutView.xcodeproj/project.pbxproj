@@ -14,6 +14,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		112DC2282584DF720094B5B1 /* RFAboutView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RFAboutView; path = ../../Desktop/RFAboutView; sourceTree = "<group>"; };
 		1195086D1D299CE9002B815A /* RFAboutView_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RFAboutView_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		119508701D299CE9002B815A /* RFAboutView_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RFAboutView_Swift.h; sourceTree = "<group>"; };
 		119508721D299CE9002B815A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +37,7 @@
 		119508631D299CE9002B815A = {
 			isa = PBXGroup;
 			children = (
+				112DC2282584DF720094B5B1 /* RFAboutView */,
 				1195086F1D299CE9002B815A /* RFAboutView */,
 				1195086E1D299CE9002B815A /* Products */,
 			);
@@ -104,7 +106,7 @@
 				TargetAttributes = {
 					1195086C1D299CE9002B815A = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1220;
 					};
 				};
 			};
@@ -113,6 +115,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 119508631D299CE9002B815A;
@@ -263,7 +266,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -282,7 +286,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.fouquet.RFAboutView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

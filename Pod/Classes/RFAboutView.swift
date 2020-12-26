@@ -15,7 +15,7 @@ public enum CloseButtonSide {
     case rightSide
 }
 
-open class RFAboutViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,MFMailComposeViewControllerDelegate,SFSafariViewControllerDelegate {
+open class RFAboutViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     
     /// Tint color of the RFAboutViewController. Defaults to black color.
     open var tintColor = UIColor.black
@@ -78,7 +78,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     open var blurHeaderBackground = true
     
     /// Effect style of the header blur. Defaults to UIBlurEffectStyleLight.
-    open var blurStyle: UIBlurEffectStyle = .light
+    open var blurStyle: UIBlurEffect.Style = .light
     
     /// Determines if diagnostic information (app title, version, build, device etc.) should be included in the email when the user taps the email link. This information can be very useful to debug certain problems and can be deleted by the user if they don't want to send this information. Defaults to true.
     open var includeDiagnosticInformationInEmail = true
@@ -233,7 +233,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         let websiteButton = UIButton(type: .custom)
         
         if let _ = websiteURL {
-            var buttonFont = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: -1)
+            var buttonFont = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: UIFont.Weight(rawValue: -1))
             if let theFont = fontWebsiteButton {
                 buttonFont = theFont
             }
@@ -243,7 +243,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         let eMailButton = UIButton(type: .custom)
         
         if let _ = contactEmail {
-            var buttonFont = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: -1)
+            var buttonFont = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: UIFont.Weight(rawValue: -1))
             if let theFont = fontEmailButton {
                 buttonFont = theFont
             }
@@ -262,7 +262,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: navigationBarTitleTextColor]
+        navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: navigationBarTitleTextColor])
         if navigationController?.viewControllers.first == self {
             var closeItem: UIBarButtonItem!
             
@@ -306,7 +306,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
             cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
             cell?.tintColor = tableViewTextColor
             
-            cell?.textLabel?.font = UIFont.systemFont(ofSize: sizeForPercent(4.688), weight: -1)
+            cell?.textLabel?.font = UIFont.systemFont(ofSize: sizeForPercent(4.688), weight: UIFont.Weight(rawValue: -1))
             
             if let theFont = fontTableCellText {
                 cell?.textLabel?.font = theFont
@@ -401,7 +401,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     private func createAndAddNameLabel(headerView: UIView) -> UILabel {
         let appNameLabel = UILabel()
         appNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        appNameLabel.font = UIFont.systemFont(ofSize: sizeForPercent(5.625), weight: -0.5)
+        appNameLabel.font = UIFont.systemFont(ofSize: sizeForPercent(5.625), weight: UIFont.Weight(rawValue: -0.5))
         
         if let theFont = fontAppName {
             appNameLabel.font = theFont
@@ -421,7 +421,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     private func createAndAddCopyrightLabel(headerView: UIView) -> UILabel {
         let copyrightInfo = UILabel()
         copyrightInfo.translatesAutoresizingMaskIntoConstraints = false
-        copyrightInfo.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: -1)
+        copyrightInfo.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: UIFont.Weight(rawValue: -1))
         
         if let theFont = fontCopyrightInfo {
             copyrightInfo.font = theFont
@@ -439,8 +439,8 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     
     private func setupAndAddHeaderButton(_ button: UIButton, title: String?, font: UIFont, target: Selector, headerView: UIView) {
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(headerTextColor, for: UIControlState())
-        button.setTitle(title, for: UIControlState())
+        button.setTitleColor(headerTextColor, for: UIControl.State())
+        button.setTitle(title, for: UIControl.State())
         button.titleLabel?.font = font
         button.addTarget(self, action: target, for: .touchUpInside)
         headerView.addSubview(button)
@@ -453,12 +453,12 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
-        tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsets.init(top: -35, left: 0, bottom: 0, right: 0)
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorColor = tableViewSeparatorColor
         tableView.backgroundColor = UIColor.clear
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = sizeForPercent(12.5)
         if additionalButtons.count > 0 {
             scrollViewContainer.addSubview(tableView)
@@ -469,7 +469,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     private func createAndAddTableHeaderLabel(scrollViewContainer: UIView) -> UILabel {
         let tableHeaderLabel = UILabel()
         tableHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        tableHeaderLabel.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: -1)
+        tableHeaderLabel.font = UIFont.systemFont(ofSize: sizeForPercent(4.375), weight: UIFont.Weight(rawValue: -1))
         
         if let theFont = fontHeaderLabel {
             tableHeaderLabel.font = theFont
@@ -495,12 +495,12 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
-        tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsets.init(top: -35, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = UIColor.clear
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.separatorColor = tableViewSeparatorColor
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = sizeForPercent(12.5)
         if showAcknowledgements {
             scrollViewContainer.addSubview(tableView)
@@ -584,11 +584,11 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     
     //MARK:- Action methods
     
-    open func close() {
+    @objc open func close() {
         dismiss(animated: true, completion: nil)
     }
     
-    open func goToWebsite() {
+    @objc open func goToWebsite() {
         let webVC = SFSafariViewController(url: websiteURL!)
         webVC.delegate = self
         present(webVC, animated: true, completion: nil)
@@ -598,7 +598,7 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         controller.dismiss(animated: true, completion: nil)
     }
     
-    open func email() {
+    @objc open func email() {
         let iOSVersion = UIDevice.current.systemVersion as String
         let device = UIDevice.current.model as String
         let deviceString = platformModelString()
@@ -621,11 +621,11 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
         } else {
             let supportText = "\"\(appName!) Version \(appVersion!) (\(appBuild!)), \(device) (\(deviceString!)), iOS \(iOSVersion) (\(lang))\""
             
-            let alert = UIAlertController(title: NSLocalizedString("Cannot send Email", comment: "Cannot send Email"), message: String(format:NSLocalizedString("Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!", comment: "Error message: no email accounts available"),contactEmail!, supportText, lang), preferredStyle: UIAlertControllerStyle.alert)
-            let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertActionStyle.cancel, handler: { (action) -> Void in
+            let alert = UIAlertController(title: NSLocalizedString("Cannot send Email", comment: "Cannot send Email"), message: String(format:NSLocalizedString("Unfortunately there are no Email accounts available on your device.\n\nFor support questions, please send an Email to %@ and include the following information: %@.\n\nTab the 'Copy info' button to copy this information to your pasteboard. Thank you!", comment: "Error message: no email accounts available"),contactEmail!, supportText, lang), preferredStyle: UIAlertController.Style.alert)
+            let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertAction.Style.cancel, handler: { (action) -> Void in
                 alert.presentingViewController?.dismiss(animated: true, completion: nil)
             })
-            let copyInfoAction = UIAlertAction(title: NSLocalizedString("Copy Info", comment: "Copy diagnostic info to pasteboard"), style:UIAlertActionStyle.default, handler: { (action) -> Void in
+            let copyInfoAction = UIAlertAction(title: NSLocalizedString("Copy Info", comment: "Copy diagnostic info to pasteboard"), style:UIAlertAction.Style.default, handler: { (action) -> Void in
                 UIPasteboard.general.string = supportText
                 alert.presentingViewController?.dismiss(animated: true, completion: nil)
             })
@@ -640,8 +640,8 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
     open func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true, completion: { () -> Void in
             if result.rawValue == MFMailComposeResult.failed.rawValue {
-                let alert = UIAlertController(title: NSLocalizedString("Message Failed!", comment: "Sending email message failed"), message: NSLocalizedString("Your email has failed to send.", comment: "Sending email message failed body"), preferredStyle: UIAlertControllerStyle.alert)
-                let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertActionStyle.cancel, handler: { (action) -> Void in
+                let alert = UIAlertController(title: NSLocalizedString("Message Failed!", comment: "Sending email message failed"), message: NSLocalizedString("Your email has failed to send.", comment: "Sending email message failed body"), preferredStyle: UIAlertController.Style.alert)
+                let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Dismiss error message"), style:UIAlertAction.Style.cancel, handler: { (action) -> Void in
                     alert.presentingViewController?.dismiss(animated: true, completion: nil)
                 })
                 alert.addAction(dismissAction)
@@ -709,4 +709,10 @@ open class RFAboutViewController: UIViewController,UITableViewDataSource,UITable
             self.view.layoutIfNeeded()
         })
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

@@ -36,8 +36,8 @@ open class RFAboutViewDetailViewController: UIViewController {
         
         let contentTextView = UITextView()
         contentTextView.frame = view.bounds
-        contentTextView.autoresizingMask = [UIViewAutoresizing.flexibleHeight, UIViewAutoresizing.flexibleWidth]
-        contentTextView.textContainerInset = UIEdgeInsetsMake(sizeForPercent(3.125), sizeForPercent(3.125), sizeForPercent(3.125), sizeForPercent(3.125))
+        contentTextView.autoresizingMask = [UIView.AutoresizingMask.flexibleHeight, UIView.AutoresizingMask.flexibleWidth]
+        contentTextView.textContainerInset = UIEdgeInsets.init(top: sizeForPercent(3.125), left: sizeForPercent(3.125), bottom: sizeForPercent(3.125), right: sizeForPercent(3.125))
         contentTextView.isUserInteractionEnabled = true
         contentTextView.isSelectable = true
         contentTextView.isEditable = false
@@ -47,7 +47,7 @@ open class RFAboutViewDetailViewController: UIViewController {
         contentTextView.backgroundColor = UIColor.clear
         contentTextView.spellCheckingType = .no
         contentTextView.textColor = textColor
-        contentTextView.font = UIFont.systemFont(ofSize: sizeForPercent(4.063), weight: -1)
+        contentTextView.font = UIFont.systemFont(ofSize: sizeForPercent(4.063), weight: UIFont.Weight(rawValue: -1))
         
         if let theFont = fontLicenseText {
             contentTextView.font = theFont
